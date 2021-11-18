@@ -1,6 +1,8 @@
 import React ,{useState}from 'react';
 import {View, Text, Button, StyleSheet, TextInput,TouchableOpacity ,SafeAreaView,Image} from 'react-native';
 
+// Register here and use the login screen to navigate to home
+
 function SignUpScreen({navigation}) {
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
@@ -74,14 +76,14 @@ function SignUpScreen({navigation}) {
           justifyContent: 'center',
         }}>
         
-        <Text >
+        <Text style={{alignSelf:'center',marginBottom:20}} >
           Registration Successful
         </Text>
         <TouchableOpacity
           //style={}
           activeOpacity={0.5}
           onPress={() => navigation.navigate('SignInScreen')}>
-          <Text >Login Now</Text>
+          <Text style={{alignSelf:'center', fontSize:26}} >Login Now</Text>
         </TouchableOpacity>
       </View>
     );

@@ -28,7 +28,6 @@ function SignInScreen({navigation}) {
 
     fetch('https://rpyendapp.herokuapp.com/login', {
       method: 'POST',
-      body: formBody,
       headers: {
         //Header Defination
         'Accept':'application/json',
@@ -40,17 +39,17 @@ function SignInScreen({navigation}) {
       })
     })
       .then((response) => response.json())
-      .then((responseJson) => {
+      .then((response) => {
         //Hide Loader
-        setLoading(false);
-        console.log(responseJson);
+        //setLoading(false);
+        console.log(response);
         // If server response message same as Data Matched
-        if (responseJson.status === 'success') {
+        if (response.status === 'success') {
           //AsyncStorage.setItem('user_id', responseJson.data.email);
-          console.log(responseJson.data.email);
-          navigation.replace('DrawerNavigationRoutes');
+          console.log(response.email);
+          navigation.replace('ElHome');
         } else {
-          setErrortext(responseJson.msg);
+          setErrortext(response.msg);
           console.log('Please check your email id or password');
         }
       })
@@ -95,7 +94,7 @@ function SignInScreen({navigation}) {
 
               <Text  onPress={() => navigation.navigate('ForgotPassword')} style={{marginLeft:210, color:'#0000ff',fontSize:12}}> Forgot Password</Text>
               <TouchableOpacity
-                onPress={() => navigation.navigate('ElHome')}
+                onPress={ handleSubmitPress /*() => navigation.navigate('ElHome')*/}
                 style={styles.roundButton1}>
                 <Image source={require('../onboardAssets/icons8-right-64.png')} style={{ marginLeft:3,marginTop:1, height:42, width:42, borderRadius:10}}/>
               </TouchableOpacity>

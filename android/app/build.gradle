@@ -217,6 +217,8 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    compile project(':react-native-document-picker')
 }
 
 // Run this once to be able to run the application with BUCK
