@@ -2,9 +2,9 @@ import React,{useState} from 'react';
 import DocumentPicker from "react-native-document-picker"
 import {View, Text,TextInput, Button,StyleSheet} from 'react-native';
 import InnerNav from "./components/innerNav"
-import ProjectDocs from "./components/doclist"
+import ProjectDocs from "./components/docList"
 import ProjectPics from "./components/photoGrid"
-import ProjectTasks from "./components/taskslist"
+import ProjectTasks from "./components/tasksList"
 
 
 const ProjectScreen = ({navigation,submitHandler}) =>{
@@ -24,16 +24,6 @@ const ProjectScreen = ({navigation,submitHandler}) =>{
         const res = await DocumentPicker.pick({allowMultiSelection: true})
         }
 
-      if (res.uri) {
-        let base64 = null;
-        let fileReader = new FileReader()
-        fileReader.onload = function(e) {
-          // body...
-          base64 = e.target.result
-        }
-        fileReader.readAsDataURL(res.uri)
-        return base64;
-      }
       } catch (err) {
         if (DocumentPicker.isCancel(err)) {
           // Picker was cancelled
@@ -49,7 +39,7 @@ const ProjectScreen = ({navigation,submitHandler}) =>{
         </View>
           <View>
           // Inner Nav JS
-            <InnerNav state={innerNav} setState={setInnerNav}/>
+            <InnerNav state={showContent} setState={setShowContent}/>
 
             // Show Selection
             {
