@@ -2,8 +2,8 @@ import React ,{useState} from 'react';
 import {View, Text, Button, StyleSheet, TextInput,TouchableOpacity ,SafeAreaView,Image} from 'react-native';
 
 function SignInScreen({navigation}) {
-  //const [text, onChangeText] = React.useState("Useless Text");
-  //const [number, onChangeNumber] = React.useState(null);
+  /*Swap the codes commented at line 97 for the ones that are not fo easy access
+    or use email: Lo@gmail.com , password:1111 to access home screen */
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   //const [loading, setLoading] = useState(false);
@@ -92,7 +92,7 @@ function SignInScreen({navigation}) {
                 placeholder="Password"
               />
 
-              <Text  onPress={() => navigation.navigate('ForgotPassword')} style={{marginLeft:210, color:'#0000ff',fontSize:12}}> Forgot Password</Text>
+              <Text style={{marginLeft:210, color:'#0000ff',fontSize:12}}  onPress={() => navigation.navigate('ForgotPassword')} > Forgot Password</Text>
               <TouchableOpacity
                 onPress={ handleSubmitPress /*() => navigation.navigate('ElHome')*/}
                 style={styles.roundButton1}>
@@ -114,7 +114,7 @@ function SignInScreen({navigation}) {
           <Image source={require('../onboardAssets/icons8-facebook-48.png')} style={{backgroundColor:'white', marginLeft:235,marginTop:-28, height:42, width:42, borderRadius:10}}/>
         </TouchableOpacity>
         
-        <Text style={{marginTop:30}}>Don't have an account?<Text  onPress={() => navigation.navigate('SignUpScreen')} style={{color:'#87ceeb'}}> Sign up</Text></Text>
+        <Text style={{marginTop:30}}>Don't have an account?<Text style={{color:'#87ceeb'}} onPress={() => navigation.navigate('SignUpScreen')} > Sign up</Text></Text>
         
         
       </View>

@@ -21,7 +21,7 @@ import SplashScreen from './screens/SplashScreen';
 import SignInScreen from './screens/SignInScreen';
 import SetPasswordScreen from './screens/SetPasswordScreen';
 import ForgotPassword from './screens/ForgotPasswordScreen';
-import SendScreen from './screens/SendScreen';
+import SendScreen from './screens/uploadscreen/SendScreen';
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -69,7 +69,7 @@ const ProjectStackScreen = ({navigation}) => (
 );
 
 // Removed for now screen where file picker was implemented
-/* const SendStackScreen = ({navigation}) => (
+ const SendStackScreen = ({navigation}) => (
   <SendStack.Navigator screenOptions={{
     headerStyle:{
       backgroundColor:'#00BFFF'
@@ -83,7 +83,7 @@ const ProjectStackScreen = ({navigation}) => (
       title:'Send Data'
     }}/>
   </SendStack.Navigator>
-); */
+); 
 
 
 //Drawer navigation for home and project screen
@@ -93,6 +93,7 @@ const Mill = () => {
     <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="HomeS" component={HomeStackScreen} />
         <Drawer.Screen name="ProjectS" component={ProjectStackScreen} />
+        <Drawer.Screen name="SendS" component={SendStackScreen} />
       </Drawer.Navigator>
   );
 }

@@ -93,7 +93,7 @@ function SignUpScreen({navigation}) {
       <View style={{ flex: -11, alignItems: 'center', justifyContent: 'center'}}>
           <View style ={{alignSelf:'stretch',height:226, backgroundColor:'#00BFFF'}}>
           
-          <Text style={{fonZtWeight:'bold',fontSize:50, fontFamily:'Cochin' ,alignSelf:'center',marginTop:50, color:'white'}}>SPEKTRE <Text style={{fontSize:35}}>TASK</Text></Text>
+          <Text style={{fontWeight:'bold',fontSize:50, fontFamily:'Cochin' ,alignSelf:'center',marginTop:50, color:'white'}}>SPEKTRE <Text style={{fontSize:35}}>TASK</Text></Text>
           <Text style={{alignSelf:'center', marginTop:20, fontSize:24,color:'white'}}>Welcome to Spekre</Text>
             
 
