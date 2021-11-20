@@ -94,7 +94,7 @@ function SignInScreen({navigation}) {
 
               <Text style={{marginLeft:210, color:'#0000ff',fontSize:12}}  onPress={() => navigation.navigate('ForgotPassword')} > Forgot Password</Text>
               <TouchableOpacity
-                onPress={ handleSubmitPress /*() => navigation.navigate('ElHome')*/}
+                onPress={ /*handleSubmitPress*/ () => navigation.navigate('ElHome')}
                 style={styles.roundButton1}>
                 <Image source={require('../onboardAssets/icons8-right-64.png')} style={{ marginLeft:3,marginTop:1, height:42, width:42, borderRadius:10}}/>
               </TouchableOpacity>

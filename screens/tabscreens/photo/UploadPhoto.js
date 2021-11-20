@@ -5,7 +5,7 @@ import RNFetchBlob from 'react-native-fetch-blob'
 
 
 
-const SendScreen = ({navigation}) =>{
+const UploadPhoto = ({navigation}) =>{
     const [image,setImage] = useState({img:null})
     const [upimage,setupImage] = useState({img:null})
     const [Id, setId] = useState('');
@@ -25,7 +25,7 @@ const SendScreen = ({navigation}) =>{
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
                 try {
                     const res = await DocumentPicker.pick({
-                      type: [DocumentPicker.types.allFiles],
+                      type: [DocumentPicker.types.images],
                     });
 
                     const e = res[0].uri
@@ -72,7 +72,7 @@ const SendScreen = ({navigation}) =>{
         }
         
         
-        fetch('https://rpyendapp.herokuapp.com/pdfupload', {
+        fetch('https://rpyendapp.herokuapp.com/uploadimage', {
            method: 'POST',
            headers: {
                 //Header Defination
@@ -98,7 +98,9 @@ const SendScreen = ({navigation}) =>{
              setId('')
              
             //navigation.replace('ElHome');
-             alert(response.data);
+             alert(response.data,
+                {   title: "OK",
+                    onPress: navigation.navigate("Pscreen")}).           
              return;
             } else {
             setErrortext(response.msg);
@@ -118,8 +120,8 @@ const SendScreen = ({navigation}) =>{
     //SEND SCREEN
 
     return(
-        <View>
-            <Text style={{marginBottom:50}}>Selection Screen</Text>
+        <View style={{flex:1}}>
+            <Text style={{marginBottom:10}}>Selection Screen</Text>
 
             <Image
             source={{
@@ -155,7 +157,7 @@ const SendScreen = ({navigation}) =>{
     );
 }
 
-export default SendScreen;
+export default UploadPhoto;
 
 const styles = StyleSheet.create({
     

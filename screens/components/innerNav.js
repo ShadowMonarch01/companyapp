@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {View, Text,TextInput, Button,StyleSheet} from 'react-native';
+import {View, Text,TextInput, Button,StyleSheet,TouchableOpacity} from 'react-native';
 
 
 const InnerNav = (props) =>{
@@ -11,22 +11,24 @@ const InnerNav = (props) =>{
     return(
       
           // Inner Nav JS
-            <View>
-             <Button 
+            <View style={{display: 'flex'}}>
+             <TouchableOpacity
               title="Documents"
-              onPress={()=> handleOnPress("Docs")}
+              onPress={()=> handleOnPress("Docs"),()=>{state === "Docs" ? styles.active : styles.inactive}}
             />  
-            <Button
-            title="Documents"
-              onPress={()=> handleOnPress("Tasks")}
+            <TouchableOpacity
+            //state={state === "Pics" ? styles.active : styles.inactive}
+            title="Pictures"
+              onPress={()=> handleOnPress("Pics"),()=>{state === "Docs" ? styles.active : styles.inactive}}
             />  
-            <Button
-            title="Documents"
-              onPress={()=> handleOnPress("Tasks")}
+            <TouchableOpacity
+           // state={state === "Tasks" ? styles.active : styles.inactive}
+            title="Tasks"
+              onPress={()=> handleOnPress("Tasks"),()=>{state === "Docs" ? styles.active : styles.inactive}}
             />
-            <TouchableOpacity>
-              <Image/>
-            </TouchableOpacity>  
+           {/* <TouchableOpacity>
+                          <Image/>
+                        </TouchableOpacity>*/ } 
             </View>    
     );
 }
@@ -40,5 +42,11 @@ const styles = StyleSheet.create({
         paddingVertical:6,
         borderBottomWidth:1,
         borderBottomColor:'#ddd'
+    },
+    active:{
+        backgroundColor: 'red'
+    },
+    inactive:{
+        backgroundColor: 'transparent'
     }
 })

@@ -5,9 +5,9 @@ import RNFetchBlob from 'react-native-fetch-blob'
 
 
 
-const SendScreen = ({navigation}) =>{
+const UploadDoc = ({navigation}) =>{
     const [image,setImage] = useState({img:null})
-    const [upimage,setupImage] = useState({img:null})
+    const [upPdf,setupPdf] = useState({pdf:null})
     const [Id, setId] = useState('');
 
     const selectFile = async () => {
@@ -25,7 +25,7 @@ const SendScreen = ({navigation}) =>{
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
                 try {
                     const res = await DocumentPicker.pick({
-                      type: [DocumentPicker.types.allFiles],
+                      type: [DocumentPicker.types.pdf],
                     });
 
                     const e = res[0].uri
@@ -33,7 +33,7 @@ const SendScreen = ({navigation}) =>{
                     //converting...
 
                     const result = await RNFetchBlob.fs.readFile(e,'base64')
-                    setupImage({img:result})
+                    setupPdf({pdf:result})
                      console.log('URI : ' + result);
                     
                     console.log(
@@ -66,7 +66,7 @@ const SendScreen = ({navigation}) =>{
           return;
         }
 
-        if (!upimage.img) {
+        if (!upPdf.pdf) {
           alert('Please Select an image');
           return;
         }
@@ -81,7 +81,7 @@ const SendScreen = ({navigation}) =>{
             },
             body: JSON.stringify({
                 id: Id,
-                image: upimage.img
+                pdf: upPdf.pdf
             })
         })
         .then((response) => response.json())
@@ -94,11 +94,13 @@ const SendScreen = ({navigation}) =>{
             //AsyncStorage.setItem('user_id', responseJson.data.email);
              console.log(response.data);
              setImage({img:null})
-             setupImage({img:null})
+             setupPdf({pdf:null})
              setId('')
              
             //navigation.replace('ElHome');
-             alert(response.data);
+             alert(response.data,
+                {   title: "OK",
+                    onPress: navigation.navigate("Dscreen")}).           
              return;
             } else {
             setErrortext(response.msg);
@@ -118,8 +120,8 @@ const SendScreen = ({navigation}) =>{
     //SEND SCREEN
 
     return(
-        <View>
-            <Text style={{marginBottom:50}}>Selection Screen</Text>
+        <View style={{flex:1}}>
+            <Text style={{marginBottom:10}}>Selection Screen</Text>
 
             <Image
             source={{
@@ -155,7 +157,7 @@ const SendScreen = ({navigation}) =>{
     );
 }
 
-export default SendScreen;
+export default UploadDoc;
 
 const styles = StyleSheet.create({
     

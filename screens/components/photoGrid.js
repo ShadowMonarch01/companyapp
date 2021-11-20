@@ -8,15 +8,15 @@ const ProjectPics = (props) =>{
         <View>
             <Text>Picutees Screen</Text>
             
-            // <Image
-            //     source={require('../ims2.png')}
-            //     />
-            //     <Image
-            //     source={require('../ims2.png')}
-            //     />
-            //     <Image
-            //     source={require('../ims2.png')}
-            //     />
+            { /*<Image
+                            source={require('../ims2.png')}
+                            />
+                            <Image
+                            source={require('../ims2.png')}
+                            />
+                            <Image
+                            source={require('../ims2.png')}
+                            /> */ }
             {/* <Button
              title = "Go to details"
              onPress={() => submitHandler(text1,text)}
