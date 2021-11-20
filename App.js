@@ -11,6 +11,7 @@ import {View, Text,Image} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 
 import OnboardingScreen from './screens/OnboardingScreen'
 import HomeScreen from './screens/HomeScreen'
@@ -40,6 +41,8 @@ const SendStack = createStackNavigator();
 const TabStack = createStackNavigator();
 
 const PhotoStack = createStackNavigator();
+
+const Tab = createMaterialTopTabNavigator();
 
 
 //Home screen to navigate between screens
@@ -141,6 +144,36 @@ const Mill = () => {
       </Drawer.Navigator>
   );
 }
+
+
+//HOMETABS
+
+
+const TabsScreen = ({navigation}) =>{
+    //const [text,setText] = useState('');
+    //const [text1,setText1] = useState('');
+    //const [showContent,setShowContent] = useState('Docs');
+
+   
+    return(
+        <View style={{flex:1}}>
+            <View style={{flex:1,backgroundColor:'#FFFFFF'}}>
+                <Text style={{ borderRadius:10,padding:5,height:50,marginTop:10,marginBottom:10}}>Project details</Text>
+            </View>
+
+            <View style={{flex:4}}>
+                <Tab.Navigator>
+                    <Tab.Screen name="DOCUMENTS" component={DocStaker} />
+                    <Tab.Screen name="TASKS" component={TaskTab} />
+                    <Tab.Screen name="PHOTOS" component={PhotoStaker} />
+                </Tab.Navigator>
+            </View>
+         
+        </View>
+    );
+}
+
+//HOME TABS
 
 const Mulla = () => {
   return(
