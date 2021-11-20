@@ -12,10 +12,16 @@ const InnerNav = (props) =>{
       
           // Inner Nav JS
             <View style={{display: 'flex'}}>
+<<<<<<< HEAD
              <TouchableOpacity
+=======
+             <Button 
+              style={state === "Docs" ? styles.active : styles.inactive}
+>>>>>>> bd73503cc2484dda89f19241ccabf46c3e52d394
               title="Documents"
               onPress={()=> handleOnPress("Docs"),()=>{state === "Docs" ? styles.active : styles.inactive}}
             />  
+<<<<<<< HEAD
             <TouchableOpacity
             //state={state === "Pics" ? styles.active : styles.inactive}
             title="Pictures"
@@ -25,6 +31,17 @@ const InnerNav = (props) =>{
            // state={state === "Tasks" ? styles.active : styles.inactive}
             title="Tasks"
               onPress={()=> handleOnPress("Tasks"),()=>{state === "Docs" ? styles.active : styles.inactive}}
+=======
+            <Button
+            style={state === "Pics" ? styles.active : styles.inactive}
+            title="Pictures"
+              onPress={()=> handleOnPress("Pics")}
+            />  
+            <Button
+            style={state === "Tasks" ? styles.active : styles.inactive}
+            title="Tasks"
+              onPress={()=> handleOnPress("Tasks")}
+>>>>>>> bd73503cc2484dda89f19241ccabf46c3e52d394
             />
            {/* <TouchableOpacity>
                           <Image/>
@@ -48,5 +65,11 @@ const styles = StyleSheet.create({
     },
     inactive:{
         backgroundColor: 'transparent'
+    }
+    active:{
+        backgroundColor: red
+    }
+    inactive:{
+        backgroundColor: transparent
     }
 })

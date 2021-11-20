@@ -23,7 +23,12 @@ import SetPasswordScreen from './screens/SetPasswordScreen';
 import ForgotPassword from './screens/ForgotPasswordScreen';
 import SendScreen from './screens/uploadscreen/SendScreen';
 import TabsScreen from './screens/tabscreens/TabsScreen';
+
+import PhotoTab from './screens/tabscreens/photo/phototab';
+
 import LinearGradient from 'react-native-linear-gradient';
+
+
 
 const AppStack = createStackNavigator();
 //const Stack = createStackNavigator();
@@ -33,6 +38,8 @@ const HomeStack = createStackNavigator();
 const ProjectStack = createStackNavigator();
 const SendStack = createStackNavigator();
 const TabStack = createStackNavigator();
+
+const PhotoStack = createStackNavigator();
 
 
 //Home screen to navigate between screens
@@ -103,6 +110,23 @@ const TabStackScreen = ({navigation}) => (
   </TabStack.Navigator>
 ); 
 
+//Photo Screen
+const PhotoStackScreen = ({navigation}) => (
+  <PhotoStack.Navigator screenOptions={{
+    headerStyle:{
+      backgroundColor:'#00BFFF'
+    },
+    headerTintColor:'#fff',
+    headerTitleStyle:{
+      fontWeight:'bold'
+    }
+  }}>
+    <PhotoStack.Screen name="Tabs" component={PhotoTab} options={{
+      title:'Photo Screen'
+    }}/>
+  </PhotoStack.Navigator>
+); 
+
 
 //Drawer navigation for home and project screen
 // <Drawer.Screen name="SendS" component={SendStackScreen} /> ~ Removed from implimentation for now
@@ -113,6 +137,7 @@ const Mill = () => {
         <Drawer.Screen name="ProjectS" component={ProjectStackScreen} />
         <Drawer.Screen name="SendS" component={SendStackScreen} />
         <Drawer.Screen name="TabS" component={TabStackScreen} />
+        <Drawer.Screen name="Photos" component={PhotoTab} />
       </Drawer.Navigator>
   );
 }

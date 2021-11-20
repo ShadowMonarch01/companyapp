@@ -5,7 +5,10 @@ import InnerNav from "./components/innerNav"
 import ProjectDocs from "./components/docList"
 import ProjectPics from "./components/photoGrid"
 import ProjectTasks from "./components/tasksList"
+<<<<<<< HEAD
 import TaskTab from './tabscreens/tasktab';
+=======
+>>>>>>> bd73503cc2484dda89f19241ccabf46c3e52d394
 
 
 const ProjectScreen = ({navigation,submitHandler}) =>{
@@ -14,9 +17,19 @@ const ProjectScreen = ({navigation,submitHandler}) =>{
     
     const handleProjectUpload = () => {
 
+<<<<<<< HEAD
       if (!text) {
         alert('Please enter project name');
         return;
+=======
+        const res = await DocumentPicker.pick({allowMultiSelection: true})
+        }
+
+      } catch (err) {
+        if (DocumentPicker.isCancel(err)) {
+          // Picker was cancelled
+        }
+>>>>>>> bd73503cc2484dda89f19241ccabf46c3e52d394
       }
 
       if (!details) {
@@ -69,6 +82,7 @@ const ProjectScreen = ({navigation,submitHandler}) =>{
    
   
     return(
+<<<<<<< HEAD
       <View style={{ flex: 1, backgroundColor:'#FFFFFF' }}>
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Text style={{fontSize:24,marginTop:5}}>Create New Project</Text>
@@ -77,6 +91,39 @@ const ProjectScreen = ({navigation,submitHandler}) =>{
            value={text}
            onChangeText={(ids) => setText(ids)}
            ></TextInput>
+=======
+        <View>
+            <View>
+            <Text>Top stauff</Text>
+        </View>
+          <View>
+          // Inner Nav JS
+            <InnerNav state={showContent} setState={setShowContent}/>
+
+            // Show Selection
+            {
+              showContent === "Tasks" ? (<ProjectTasks/>) : showContent === "Pics" ? (<ProjectPics/>) :  (<ProjectDocs/>)
+            }
+
+            // Upload button
+            {
+              showContent === "Tasks" ? (
+                  <Button
+              onPress={()=>{
+                console.log("dd")
+              }}
+              title="Add Task"
+            /> 
+                ) : showContent === "Pics" ? (
+                  <Button
+              onPress={()=>{
+                
+                convertToBase64(true)
+              }}
+              title="Upload"
+            /> 
+                ) :  (
+>>>>>>> bd73503cc2484dda89f19241ccabf46c3e52d394
 
           <TextInput
             multiline
