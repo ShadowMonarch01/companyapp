@@ -5,7 +5,7 @@ const DocumentTab = ({navigation}) =>{
     
     return(
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{fontSize:16,marginTop:5}}>Photo Screen</Text>
+        <Text style={{fontSize:16,marginTop:5}}>Document Screen</Text>
         <View style={{marginTop:10}}>
         <Button
            title = "Upload Document"

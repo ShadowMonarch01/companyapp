@@ -1,68 +1,31 @@
 import React, {useState} from 'react';
+import { createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import {View, Text, ScrollView,TouchableOpacity} from 'react-native';
 import {Agenda} from 'react-native-calendars';
-import ProjectScreen from './ProjectScreen'
+import FirstScreen from './hometabs/FirstScreen'
+import SecondScreen from './hometabs/SecondScreen'
+import ThirdScreen from './hometabs/ThirdScreen'
+import FourthScreen from './hometabs/FourthScreen'
 
+
+
+const HTab = createBottomTabNavigator();
 
 
 const HomeScreen = ({navigation}) =>{
   
-  const [items, setItems] = useState({
-    '2020-11-29': [{name:'aaca'},{name:'aaca'}],
-  });
-
- 
-
-  const submitHandler = (keys,text) =>{
-     
-    setItems((prevKeys) =>{
-      //const n1 =keys
-      var temp = {...prevKeys}
-
-      
-     
-      if(keys in temp){
-      temp[keys].push({name:text})
-      
-      return temp
-      }
-      
-      else
-        temp[keys]= [{name:text}]
-        return temp
-    })
-   }
-  const renderItem = (item) => {
-
-    return(
-      <TouchableOpacity>
-        <View style={{flexDirection:'row', justifyContent: 'space-between',alignItems:'center', backgroundColor:'#FFFFFF',borderRadius:10,padding:5,height:50,marginTop:10,marginBottom:10}}>
-          <Text>{item.name}</Text>
-        </View>
-      </TouchableOpacity>
-    )
-
-  }
+  
 
 
   return(
-  <View style={{flex: 1}}>
-    
-    <View style={{borderRadius: 6,width:'100%', height:470}}>
-    <Agenda
-      items={items}
-      selected={'2020-11-29'}
-      renderItem={renderItem}
-     
-    />
+    <View style={{flex:1}}>
+      <HTab.Navigator>
+          <HTab.Screen name="HOMEC" component={FirstScreen} />
+          <HTab.Screen name="AGENDAC" component={SecondScreen} />
+          <HTab.Screen name="PROFILEC" component={ThirdScreen} />
+          <HTab.Screen name="SETTINGSC" component={FourthScreen} />
+      </HTab.Navigator>
     </View>
-    
-    
-  <Text style={{marginTop:2}}>Home Screen</Text>
-  <ProjectScreen style={{flex:1}}/>
-          
-          
-  </View>
   );
 }
 
