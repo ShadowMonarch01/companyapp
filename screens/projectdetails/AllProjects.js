@@ -18,10 +18,27 @@ const AllProjectsScreen = ({navigation}) =>{
     
      	},[])
 
+       const ListItem = ({props) => {
+          <View>
+            <Text>{props.name}</Text>
+            <Text>{props.details}</Text>
+          </View> 
+      }
+
+
+      const renderItem = ({item}) => {
+          <ListItem name={item.name} details={item.details}/>
+      }
+
+
     return(
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <Text>All Projects</Text>
-          {projects.map(item => <Text>{item.name}</Text>)}
+          <FlatList
+            data={projects}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+          />
        </View>
     );
 }
