@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {View, Text,StyleSheet} from 'react-native';
-
+import { useFocusEffect } from "@react-navigation/native"
 // For OPTION 2
 // import { useIsFocused } from "@react-navigation/native"
 
