@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, Text,StyleSheet} from 'react-native';
 
 // For OPTION 2
@@ -9,7 +9,7 @@ const AllProjectsScreen = ({navigation}) =>{
      	const [projects, setProjects] = useState([]);
 
        useFocusEffect(
-        React.useCallback(()={
+        useCallback(()={
               const getData = () =>{
 
                 fetch('https://rpyendapp.herokuapp.com/getprojects')
