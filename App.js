@@ -11,6 +11,7 @@ import {View, Text,Image} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import  Icon  from 'react-native-vector-icons/Ionicons';
 
 
 import OnboardingScreen from './screens/OnboardingScreen'
@@ -27,6 +28,8 @@ import TabsScreen from './screens/tabscreens/TabsScreen';
 
 import PhotoTab from './screens/tabscreens/photo/phototab';
 
+import AllProjectsScreen from './screens/projectdetails/AllProjects';
+
 import LinearGradient from 'react-native-linear-gradient';
 
 
@@ -36,11 +39,11 @@ const AppStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const RootStack = createStackNavigator();
 const HomeStack = createStackNavigator();
-const ProjectStack = createStackNavigator();
+const AllProjectStack = createStackNavigator();
 const SendStack = createStackNavigator();
 const TabStack = createStackNavigator();
 
-const PhotoStack = createStackNavigator();
+const ProjectStack = createStackNavigator();
 
 
 
@@ -57,7 +60,11 @@ const HomeStackScreen = ({navigation}) => (
     }
   }}>
     <HomeStack.Screen name="Home" component={HomeScreen} options={{
-      title:'Overview'
+      title:'Overview',
+      headerLeft:()=>(
+        <Icon.Button name="menu" size={25}
+        backgroundColor="#00BFFF" onPress={() =>navigation.openDrawer()}></Icon.Button>
+      )
     }}/>
   </HomeStack.Navigator>
 );
@@ -113,9 +120,9 @@ const TabStackScreen = ({navigation}) => (
   </TabStack.Navigator>
 ); 
 
-//Photo Screen
-const PhotoStackScreen = ({navigation}) => (
-  <PhotoStack.Navigator screenOptions={{
+//All projects returned
+const DallProjects = ({navigation}) => (
+  <AllProjectStack.Navigator screenOptions={{
     headerStyle:{
       backgroundColor:'#00BFFF'
     },
@@ -124,10 +131,10 @@ const PhotoStackScreen = ({navigation}) => (
       fontWeight:'bold'
     }
   }}>
-    <PhotoStack.Screen name="Tabs" component={PhotoTab} options={{
+    <AllProjectStack.Screen name="Tabs" component={AllProjectsScreen} options={{
       title:'Photo Screen'
     }}/>
-  </PhotoStack.Navigator>
+  </AllProjectStack.Navigator>
 ); 
 
 
@@ -139,8 +146,9 @@ const Mill = () => {
         <Drawer.Screen name="HomeS" component={HomeStackScreen} />
         <Drawer.Screen name="ProjectS" component={ProjectStackScreen} />
         <Drawer.Screen name="SendS" component={SendStackScreen} />
-        <Drawer.Screen name="TabS" component={TabStackScreen} />
+       {/* <Drawer.Screen name="TabS" component={TabStackScreen} />*/}
         <Drawer.Screen name="Photos" component={PhotoTab} />
+        <Drawer.Screen name="AllProjectsRe" component={DallProjects} />
       </Drawer.Navigator>
   );
 }

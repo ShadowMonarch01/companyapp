@@ -1,5 +1,6 @@
 import React ,{useState} from 'react';
 import {View, Text, Button, StyleSheet, TextInput,TouchableOpacity ,SafeAreaView,Image} from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 function SignInScreen({navigation}) {
   /*Swap the codes commented at line 97 for the ones that are not fo easy access
@@ -8,6 +9,8 @@ function SignInScreen({navigation}) {
   const [password, setPassword] = useState('');
   //const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
+
+  const [sta,setSta]= useState({isVis:false})
 
 
   const handleSubmitPress = () => {
@@ -25,7 +28,7 @@ function SignInScreen({navigation}) {
       email: email,
       password: password,
     };
-
+    setSta({isVis: true})
     fetch('https://rpyendapp.herokuapp.com/login', {
       method: 'POST',
       headers: {
@@ -47,9 +50,11 @@ function SignInScreen({navigation}) {
         if (response.status === 'success') {
           //AsyncStorage.setItem('user_id', responseJson.data.email);
           console.log(response.email);
+          setSta({isVis: false})
           navigation.replace('ElHome');
         } else {
           setErrortext(response.msg);
+          setSta({isVis: false})
           alert(response.msg);
           console.log('Please check your email id or password');
         }
@@ -66,6 +71,18 @@ function SignInScreen({navigation}) {
 
     return (
       <View style={{ flex: -11, alignItems: 'center', justifyContent: 'center'}}>
+
+          <View style={{flex: 1,alignItems: 'center',justifyContent: 'center'}}>
+              <Spinner
+              //visibility of Overlay Loading Spinner
+              visible={sta.isVis}
+              //Text with the Spinner
+              textContent={'Logging in...'}
+              //Text style of the Spinner Text
+              textStyle={{color: '#FFF'}}
+            />
+          </View>
+
           <View style ={{alignSelf:'stretch',height:226, backgroundColor:'#00BFFF'}}>
           
           <Text style={{fontWeight:'bold',fontSize:50, fontFamily:'Cochin' ,alignSelf:'center',marginTop:50, color:'white'}}>SPEKTRE <Text style={{fontSize:35}}>TASK</Text></Text>

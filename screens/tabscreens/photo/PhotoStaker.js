@@ -7,12 +7,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const PStack = createStackNavigator();
 
-const PhotoStaker = ({navigation}) =>{
+const PhotoStaker = ({route,navigation,name}) =>{
     
     return(
         <View style={{ flex: 1}}>
             <PStack.Navigator headerMode='none'>
-                <PStack.Screen name="Pscreen" component={PhotoTab}/>
+                <PStack.Screen name="Pscreen" children={(props)=> <PhotoTab {...props} name={name}/>}/>
                 <PStack.Screen name="Uscreen" component={UploadPhoto}/>
             </PStack.Navigator>
        </View>

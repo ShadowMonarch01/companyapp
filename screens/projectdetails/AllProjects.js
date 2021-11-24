@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text,StyleSheet} from 'react-native';
+import {View, Text,StyleSheet,FlatList,TouchableOpacity,Image} from 'react-native';
 
 const AllProjectsScreen = ({navigation}) =>{
 
@@ -16,18 +16,31 @@ const AllProjectsScreen = ({navigation}) =>{
 	          console.error(error);
 	      });
     
-     	},[])
+     	})
 
-       const ListItem = ({props) => {
-          <View>
-            <Text>{props.name}</Text>
-            <Text>{props.details}</Text>
-          </View> 
-      }
-
+       
 
       const renderItem = ({item}) => {
-          <ListItem name={item.name} details={item.details}/>
+        return(
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Fdetails',{name:item.id, details:item.details })}
+          >
+              <View style={{flexDirection:'column', justifyContent: 'space-between', backgroundColor:'#FFFFFF',borderRadius:10,padding:18,marginTop:10,marginBottom:10}}>
+                 <View style={{flexDirection:'row'}}>
+                    <Image
+                      style={{height: 40,
+                          width: 40,
+                          margin: 12,borderWidth: 1,backgroundColor:'blue'}}
+                    />
+                    <View style={{flexDirection:'column'}}>
+                        <Text style={{marginTop:8}}>{item.name}</Text>
+                        <Text style={{marginTop:6}}>Dropped by...</Text>
+                     </View>
+                 </View>
+                <Text>{item.details}</Text>
+              </View>
+        </TouchableOpacity>
+        )
       }
 
 
@@ -39,6 +52,7 @@ const AllProjectsScreen = ({navigation}) =>{
             renderItem={renderItem}
             keyExtractor={item => item.id}
           />
+          <View></View>
        </View>
     );
 }
