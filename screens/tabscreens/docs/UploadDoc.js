@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {View, Text, Button,PermissionsAndroid,Image,TextInput,StyleSheet} from 'react-native';
+import {View, Text, Button,PermissionsAndroid,Image,TextInput,StyleSheet,Alert} from 'react-native';
 import DocumentPicker from 'react-native-document-picker'
 import RNFetchBlob from 'react-native-fetch-blob'
 
@@ -80,8 +80,8 @@ const UploadDoc = ({navigation}) =>{
                 'Content-Type':'application/json',
             },
             body: JSON.stringify({
-                id: Id,
-                pdf: upPdf.pdf
+                "id": Id,
+                "pdf": upPdf.pdf
             })
         })
         .then((response) => response.json())
@@ -98,7 +98,7 @@ const UploadDoc = ({navigation}) =>{
              setId('')
              
             //navigation.replace('ElHome');
-             alert(response.data,
+             Alert.alert(response.data,
                 {   title: "OK",
                     onPress: navigation.navigate("Dscreen")}).           
              return;

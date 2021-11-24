@@ -1,5 +1,6 @@
 import React ,{useState}from 'react';
-import {View, Text, Button, StyleSheet, TextInput,TouchableOpacity ,SafeAreaView,Image} from 'react-native';
+import {View, Text, Button, StyleSheet, TextInput,TouchableOpacity ,SafeAreaView,Image,ActivityIndicator} from 'react-native';
+//import Spinner from 'react-native-loading-spinner-overlay';
 
 // Register here and use the login screen to navigate to home
 
@@ -9,6 +10,8 @@ function SignUpScreen({navigation}) {
   const [password, setPassword] = useState('');
   const [isRegistraionSuccess,  setIsRegistraionSuccess] = useState(false);
   const [errortext, setErrortext] = useState('');
+
+  //const [sta,setSta]= useState({isVis:false})
 
   const handleSubmitButton = () => {
     setErrortext('');
@@ -91,6 +94,21 @@ function SignUpScreen({navigation}) {
 
     return (
       <View style={{ flex: -11, alignItems: 'center', justifyContent: 'center'}}>
+
+        {/*loading screens*/}
+
+        {/*<View style={{flex: 1,alignItems: 'center',justifyContent: 'center'}}>
+              <Spinner
+              //visibility of Overlay Loading Spinner
+              visible={sta.isVis}
+              //Text with the Spinner
+              textContent={'Logging in...'}
+              //Text style of the Spinner Text
+              textStyle={{color: '#FFF'}}
+            />
+    </View> */}
+
+
           <View style ={{alignSelf:'stretch',height:226, backgroundColor:'#00BFFF'}}>
           
           <Text style={{fontWeight:'bold',fontSize:50, fontFamily:'Cochin' ,alignSelf:'center',marginTop:50, color:'white'}}>SPEKTRE <Text style={{fontSize:35}}>TASK</Text></Text>

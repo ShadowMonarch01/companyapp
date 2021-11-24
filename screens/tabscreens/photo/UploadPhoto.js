@@ -1,17 +1,21 @@
 import React,{useState} from 'react';
-import {View, Text, Button,PermissionsAndroid,Image,TextInput,StyleSheet} from 'react-native';
+import {View, Text, Button,PermissionsAndroid,Image,TextInput,StyleSheet,Alert} from 'react-native';
 import DocumentPicker from 'react-native-document-picker'
 import RNFetchBlob from 'react-native-fetch-blob'
 
 
 
-const UploadPhoto = ({navigation}) =>{
+const UploadPhoto = ({route,navigation}) =>{
+    
+    const {ids} = route.params;
+
     const [image,setImage] = useState({img:null})
     const [upimage,setupImage] = useState({img:null})
     const [Id, setId] = useState('');
+    const [errortext, setErrortext] = useState('');
 
     const selectFile = async () => {
-
+          setId(ids)
 
         try {
             const granted = await PermissionsAndroid.request(
@@ -33,6 +37,7 @@ const UploadPhoto = ({navigation}) =>{
                     //converting...
 
                     const result = await RNFetchBlob.fs.readFile(e,'base64')
+                    
                     setupImage({img:result})
                      console.log('URI : ' + result);
                     
@@ -60,11 +65,12 @@ const UploadPhoto = ({navigation}) =>{
     //SEND SCREEN
 
     const handleUpload = () => {
-
+      {/*
         if (!Id) {
           alert('Please enter project id');
           return;
         }
+      */}
 
         if (!upimage.img) {
           alert('Please Select an image');
@@ -80,8 +86,8 @@ const UploadPhoto = ({navigation}) =>{
                 'Content-Type':'application/json',
             },
             body: JSON.stringify({
-                id: Id,
-                image: upimage.img
+                "id": Id,
+                "image": upimage.img
             })
         })
         .then((response) => response.json())
@@ -97,19 +103,19 @@ const UploadPhoto = ({navigation}) =>{
              setupImage({img:null})
              setId('')
              
-            //navigation.replace('ElHome');
-             alert(response.data,
+            navigation.navigate('Pscreen');
+            alert(response.status,
                 {   title: "OK",
-                    onPress: navigation.navigate("Pscreen")}).           
+                    onPress: navigation.navigate("Pscreen")})           
              return;
             } else {
-            setErrortext(response.msg);
+            setErrortext(response.data);
             console.log('An error occured try again');
             }
         })
         .catch((error) => {
             //Hide Loader
-            setLoading(false);
+            //setLoading(false);
             console.error(error);
         });
         
@@ -133,7 +139,7 @@ const UploadPhoto = ({navigation}) =>{
           />
 
             
-            <TextInput
+           {/* <TextInput
                 style={styles.input}
                 //onChangeText={onChangeText}
                 onChangeText={(ids) => setId(ids)}
@@ -141,7 +147,8 @@ const UploadPhoto = ({navigation}) =>{
                 placeholder="project id"
                 value={Id}
                />               
-            
+           */}
+           
             <Button
              title = "Pick image"
              onPress={selectFile}

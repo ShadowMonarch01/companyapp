@@ -1,11 +1,11 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {View, Text,StyleSheet} from 'react-native';
 
-const TaskTab = ({navigation}) =>{
+const TaskTab = ({navigation,name}) =>{
     
     return(
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>Task Screen</Text>
+          <Text>Task Screen {name}</Text>
        </View>
     );
 }

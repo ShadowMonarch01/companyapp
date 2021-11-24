@@ -7,12 +7,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const DStack = createStackNavigator();
 
-const DocStaker = ({navigation}) =>{
+const DocStaker = ({route,navigation,name}) =>{
     
     return(
         <View style={{ flex: 1}}>
             <DStack.Navigator headerMode='none'>
-                <DStack.Screen name="Dscreen" component={DocumentTab}/>
+                <DStack.Screen name="Dscreen" children={(props)=> <DocumentTab {...props} name={name}/>}/>
                 <DStack.Screen name="Dupscreen" component={UploadDoc}/>
             </DStack.Navigator>
        </View>
