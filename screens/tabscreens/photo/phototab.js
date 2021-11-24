@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {View, Text,StyleSheet,Button,FlatList,TouchableOpacity,Image} from 'react-native';
+import {View, Text,StyleSheet,Button,FlatList,TouchableOpacity,Image,RefreshControl} from 'react-native';
 
 const PhotoTab = ({route,navigation,name}) =>{
   
@@ -7,12 +7,21 @@ const PhotoTab = ({route,navigation,name}) =>{
 
   const [projects, setProjects] = useState([])
 
+  const [refreshing,setRefreshing] = useState(true)
+
   
 
   useEffect(()=>{
      //setId(name)
      
-     fetch('https://rpyendapp.herokuapp.com/getprojectimgs',{
+     getData();
+       // setRefreshing(true)
+
+  },[id])
+
+  const getData = () =>{
+
+    fetch('https://rpyendapp.herokuapp.com/getprojectimgs',{
           method: 'POST',
           headers: {
                //Header Defination
@@ -26,12 +35,12 @@ const PhotoTab = ({route,navigation,name}) =>{
 	      .then((response) => response.json())
 	      .then((response) => {
 	         setProjects(response.data)
+           setRefreshing(false)
 	      })
 	      .catch((error) => {
 	          console.error(error);
 	      });
-
-  },[id])
+  };
 
   const renderItem = ({item}) => {
     var tss ='data:image/png;base64,'
@@ -40,19 +49,24 @@ const PhotoTab = ({route,navigation,name}) =>{
      <TouchableOpacity
        //onPress={() => navigate('Fdetails')}
      >
-         <View style={{flexDirection:'column', justifyContent: 'space-between', backgroundColor:'#FFFFFF',borderRadius:10,padding:18,marginTop:10,marginBottom:10}}>
+         <View style={{flexDirection:'column', justifyContent: 'space-between', backgroundColor:'#FFFFFF',borderRadius:10,padding:5,marginTop:10,marginBottom:10}}>
                <Image  
                  source={{uri: oss}}
-                 style={{height: 80,
-                     width: 80,
-                     margin: 12,borderWidth: 1}}
+                 style={{height: 300,
+                     width: 300,
+                     margin: 12,borderWidth: 1,resizeMode: 'contain'}}
                />
          </View>
    </TouchableOpacity>
    )
  }
 
- //()=>{setId(name)}
+ const onRefresh = () =>{
+   setRefreshing(true)
+   getData()
+ }
+  
+ 
 return(
    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
      <Text>All Projects{id}</Text>
@@ -60,6 +74,13 @@ return(
        data={projects}
        renderItem={renderItem}
        keyExtractor={item => item.id}
+       refreshControl={
+         <RefreshControl
+           refreshing={refreshing}
+           onRefresh={onRefresh} 
+         
+         />
+       }
      />
      <Button
         title = "Upload photo"

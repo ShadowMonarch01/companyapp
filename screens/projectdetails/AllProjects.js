@@ -1,77 +1,60 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text,StyleSheet} from 'react-native';
-
-// For OPTION 2
-// import { useIsFocused } from "@react-navigation/native"
+import React, {useState, useEffect} from 'react';
+import {View, Text,StyleSheet,FlatList,TouchableOpacity,Image,RefreshControl} from 'react-native';
 
 const AllProjectsScreen = ({navigation}) =>{
 
-     	const [projects, setProjects] = useState([]);
+     	const [projects, setProjects] = useState([])
 
-       useFocusEffect(
-        useCallback(()={
-              const getData = () =>{
+      const [refreshing,setRefreshing] = useState(true)
 
-                fetch('https://rpyendapp.herokuapp.com/getprojects')
-                .then((response) => response.json())
-                .then((response) => {
-                   setProjects(response.data)
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-              }
-            
-            
-          })
-        )
-     
-      // OPTION 2 = THIS USES REACT NAVIGATION useIsFocused
-      // let isFocused = useIsFocused();
-      // useEffect(()=> {
-      //       fetch('https://rpyendapp.herokuapp.com/getprojects')
-      //       .then((response) => response.json())
-      //       .then((response) => {
-      //          setProjects(response.data)
-      //       })
-      //       .catch((error) => {
-      //           console.error(error);
-      //       });
+     	useEffect(()=> {
 
-      // },[isFocused])
+	      getAllData();
+    
+     	},[])
+
+       const getAllData =()=>{
+        fetch('https://rpyendapp.herokuapp.com/getprojects')
+	      .then((response) => response.json())
+	      .then((response) => {
+	         setProjects(response.data)
+           setRefreshing(false)
+	      })
+	      .catch((error) => {
+	          console.error(error);
+	      });
+       };
 
 
-      // OPTION 3 = THIS USES REACT NAVIGATION focus event
-     	// useEffect(()=> {
-      //     const getData = navigation.addListener("focus", ()=>{
-
-      //       fetch('https://rpyendapp.herokuapp.com/getprojects')
-      //       .then((response) => response.json())
-      //       .then((response) => {
-      //          setProjects(response.data)
-      //       })
-      //       .catch((error) => {
-      //           console.error(error);
-      //       });
-      //     })
-          
-      //     return getData;
-     	// },[navigation])
-
-     
-
-       const ListItem = ({props) => {
-          <View>
-            <Text>{props.name}</Text>
-            <Text>{props.details}</Text>
-          </View> 
-      }
-
+       
 
       const renderItem = ({item}) => {
-          <ListItem name={item.name} details={item.details}/>
+        return(
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Fdetails',{name:item.id, details:item.details })}
+          >
+              <View style={{flexDirection:'column', justifyContent: 'space-between', backgroundColor:'#FFFFFF',borderRadius:10,padding:18,marginTop:10,marginBottom:10}}>
+                 <View style={{flexDirection:'row'}}>
+                    <Image
+                      style={{height: 40,
+                          width: 40,
+                          margin: 12,borderWidth: 1,backgroundColor:'blue'}}
+                    />
+                    <View style={{flexDirection:'column'}}>
+                        <Text style={{marginTop:8}}>{item.name}</Text>
+                        <Text style={{marginTop:6}}>Dropped by...</Text>
+                     </View>
+                 </View>
+                <Text>{item.details}</Text>
+              </View>
+        </TouchableOpacity>
+        )
       }
-
+       
+      const onRefresh = () =>{
+        setRefreshing(true)
+        getAllData()
+      }
 
     return(
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -80,7 +63,15 @@ const AllProjectsScreen = ({navigation}) =>{
             data={projects}
             renderItem={renderItem}
             keyExtractor={item => item.id}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh} 
+              
+              />
+            }
           />
+          <View></View>
        </View>
     );
 }
