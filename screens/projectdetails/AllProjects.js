@@ -1,22 +1,64 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text,StyleSheet} from 'react-native';
 
+// For OPTION 2
+// import { useIsFocused } from "@react-navigation/native"
+
 const AllProjectsScreen = ({navigation}) =>{
 
-     	const [projects, setProjects] = useState([])
+     	const [projects, setProjects] = useState([]);
 
-     	useEffect(()=> {
+       useFocusEffect(
+        React.useCallback(()={
+              const getData = () =>{
 
-	      fetch('https://rpyendapp.herokuapp.com/getprojects')
-	      .then((response) => response.json())
-	      .then((response) => {
-	         setProjects(response.data)
-	      })
-	      .catch((error) => {
-	          console.error(error);
-	      });
-    
-     	},[])
+                fetch('https://rpyendapp.herokuapp.com/getprojects')
+                .then((response) => response.json())
+                .then((response) => {
+                   setProjects(response.data)
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+              }
+            
+            
+          })
+        )
+     
+      // OPTION 2 = THIS USES REACT NAVIGATION useIsFocused
+      // let isFocused = useIsFocused();
+      // useEffect(()=> {
+      //       fetch('https://rpyendapp.herokuapp.com/getprojects')
+      //       .then((response) => response.json())
+      //       .then((response) => {
+      //          setProjects(response.data)
+      //       })
+      //       .catch((error) => {
+      //           console.error(error);
+      //       });
+
+      // },[isFocused])
+
+
+      // OPTION 3 = THIS USES REACT NAVIGATION focus event
+     	// useEffect(()=> {
+      //     const getData = navigation.addListener("focus", ()=>{
+
+      //       fetch('https://rpyendapp.herokuapp.com/getprojects')
+      //       .then((response) => response.json())
+      //       .then((response) => {
+      //          setProjects(response.data)
+      //       })
+      //       .catch((error) => {
+      //           console.error(error);
+      //       });
+      //     })
+          
+      //     return getData;
+     	// },[navigation])
+
+     
 
        const ListItem = ({props) => {
           <View>
