@@ -10,9 +10,7 @@ const AllProjectsScreen = ({navigation}) =>{
 
        useFocusEffect(
         useCallback(()={
-              const getData = () =>{
-
-                fetch('https://rpyendapp.herokuapp.com/getprojects')
+             fetch('https://rpyendapp.herokuapp.com/getprojects')
                 .then((response) => response.json())
                 .then((response) => {
                    setProjects(response.data)
@@ -20,10 +18,9 @@ const AllProjectsScreen = ({navigation}) =>{
                 .catch((error) => {
                     console.error(error);
                 });
-              }
             
             
-          })
+          }, [])
         )
      
       // OPTION 2 = THIS USES REACT NAVIGATION useIsFocused
