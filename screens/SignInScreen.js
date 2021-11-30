@@ -1,6 +1,7 @@
 import React ,{useState} from 'react';
 import {View, Text, Button, StyleSheet, TextInput,TouchableOpacity ,SafeAreaView,Image} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
+import AsyncStorage from '@react-native-community/async-storage';
 
 function SignInScreen({navigation}) {
   /*Swap the codes commented at line 97 for the ones that are not fo easy access
@@ -13,7 +14,7 @@ function SignInScreen({navigation}) {
   const [sta,setSta]= useState({isVis:false})
 
 
-  const handleSubmitPress = () => {
+  const handleSubmitPress = async () => {
     setErrortext('');
     if (!email) {
       alert('Please fill Email');
@@ -37,8 +38,8 @@ function SignInScreen({navigation}) {
         'Content-Type':'application/json',
       },
       body: JSON.stringify({
-        email: email,
-        password: password
+        "email": email,
+        "password": password
       })
     })
       .then((response) => response.json())
@@ -49,9 +50,17 @@ function SignInScreen({navigation}) {
         // If server response message same as Data Matched
         if (response.status === 'success') {
           //AsyncStorage.setItem('user_id', responseJson.data.email);
-          console.log(response.email);
+          console.log(response.name);
+          
+           AsyncStorage.setItem('id', response.id)
+           AsyncStorage.setItem('token', response.token)
+           AsyncStorage.setItem('name', response.name)
+           AsyncStorage.setItem('propic', response.propic)
+           AsyncStorage.setItem('about', response.about)
+           AsyncStorage.setItem('phone', response.phone)
+           AsyncStorage.setItem('adm', response.adm)
           setSta({isVis: false})
-          navigation.replace('ElHome');
+          navigation.navigate('ElHome');
         } else {
           setErrortext(response.msg);
           setSta({isVis: false})

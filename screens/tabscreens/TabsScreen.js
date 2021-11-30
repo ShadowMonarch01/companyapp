@@ -50,7 +50,7 @@ const TabsScreen = ({route,navigation}) =>{
             </View>
 
             <View style={{flex:4}}>
-                <Tab.Navigator>
+                <Tab.Navigator initialRouteName="DOCUMENTS">
                     <Tab.Screen name="DOCUMENTS" children={(props)=> <DocStaker {...props} name={name}/>}/>
                     <Tab.Screen name="TASKS" children={(props)=> <TaskTab {...props} name={name}/>}/>
                     <Tab.Screen name="PHOTOS" children={(props)=> <PhotoStaker {...props} name={name}/>}/>

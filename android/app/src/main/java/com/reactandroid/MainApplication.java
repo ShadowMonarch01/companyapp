@@ -13,6 +13,8 @@ import java.util.List;
 
 import com.BV.LinearGradient.LinearGradientPackage;
 
+import com.kurisu.fileviewer.RNFileViewerPackage;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
@@ -30,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
 
            packages.add(new LinearGradientPackage());
+           //packages.add(new RNFileViewerPackage());
 
           return packages;
         }

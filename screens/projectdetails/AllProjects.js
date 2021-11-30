@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text,StyleSheet,FlatList,TouchableOpacity,Image,RefreshControl} from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
 const AllProjectsScreen = ({navigation}) =>{
 
@@ -7,11 +8,16 @@ const AllProjectsScreen = ({navigation}) =>{
 
       const [refreshing,setRefreshing] = useState(true)
 
+      let isFocused = useIsFocused();
+
      	useEffect(()=> {
+         
+         setProjects([])
 
 	      getAllData();
+        onRefresh()
     
-     	},[])
+     	},[isFocused])
 
        const getAllData =()=>{
         fetch('https://rpyendapp.herokuapp.com/getprojects')
@@ -34,7 +40,7 @@ const AllProjectsScreen = ({navigation}) =>{
             onPress={() => navigation.navigate('Fdetails',{name:item.id, details:item.details })}
           >
               <View style={{flexDirection:'column', justifyContent: 'space-between', backgroundColor:'#FFFFFF',borderRadius:10,padding:18,marginTop:10,marginBottom:10}}>
-                 <View style={{flexDirection:'row'}}>
+                 <View style={{flexDirection:'row',alignSelf:'stretch',width:300}}>
                     <Image
                       style={{height: 40,
                           width: 40,

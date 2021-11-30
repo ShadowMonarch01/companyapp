@@ -18,7 +18,7 @@ import OnboardingScreen from './screens/OnboardingScreen'
 import HomeScreen from './screens/HomeScreen'
 import ProjectScreen from './screens/ProjectScreen'
 import SignUpScreen from './screens/SignUpScreen'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 import SplashScreen from './screens/SplashScreen';
 import SignInScreen from './screens/SignInScreen';
 import SetPasswordScreen from './screens/SetPasswordScreen';
@@ -60,7 +60,7 @@ const HomeStackScreen = ({navigation}) => (
     }
   }}>
     <HomeStack.Screen name="Home" component={HomeScreen} options={{
-      title:'Overview',
+      title:'Home',
       headerLeft:()=>(
         <Icon.Button name="menu" size={25}
         backgroundColor="#00BFFF" onPress={() =>navigation.openDrawer()}></Icon.Button>
@@ -81,7 +81,11 @@ const ProjectStackScreen = ({navigation}) => (
     }
   }}>
     <ProjectStack.Screen name="Project" component={ProjectScreen} options={{
-      title:'Overview'
+      title:'Overview',
+      headerLeft:()=>(
+        <Icon.Button name="menu" size={25}
+        backgroundColor="#00BFFF" onPress={() =>navigation.openDrawer()}></Icon.Button>
+      )
     }}/>
   </ProjectStack.Navigator>
 );
@@ -98,7 +102,11 @@ const ProjectStackScreen = ({navigation}) => (
     }
   }}>
     <SendStack.Screen name="Send" component={SendScreen} options={{
-      title:'Send Data'
+      title:'Send Data',
+      headerLeft:()=>(
+        <Icon.Button name="menu" size={25}
+        backgroundColor="#00BFFF" onPress={() =>navigation.openDrawer()}></Icon.Button>
+      )
     }}/>
   </SendStack.Navigator>
 ); 
@@ -132,7 +140,11 @@ const DallProjects = ({navigation}) => (
     }
   }}>
     <AllProjectStack.Screen name="Tabs" component={AllProjectsScreen} options={{
-      title:'Photo Screen'
+      title:'All Projects',
+      headerLeft:()=>(
+        <Icon.Button name="menu" size={25}
+        backgroundColor="#00BFFF" onPress={() =>navigation.openDrawer()}></Icon.Button>
+      )
     }}/>
   </AllProjectStack.Navigator>
 ); 
@@ -143,12 +155,21 @@ const DallProjects = ({navigation}) => (
 const Mill = () => {
   return(
     <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="HomeS" component={HomeStackScreen} />
-        <Drawer.Screen name="ProjectS" component={ProjectStackScreen} />
+        <Drawer.Screen name="HomeS" component={HomeStackScreen} options={{ title: 'Home',
+            drawerIcon: ({  size,color }) => (
+              <Icon name={"home-sharp"} size={size} color={ color/*'#adafaa'*/}/> )       
+            }}/>
+        <Drawer.Screen name="ProjectS" component={ProjectStackScreen}  options={{ title: 'New Project',
+            drawerIcon: ({  size,color }) => (
+              <Icon name={"create-sharp"} size={size} color={ color/*'#adafaa'*/}/> )       
+            }}/>
         <Drawer.Screen name="SendS" component={SendStackScreen} />
        {/* <Drawer.Screen name="TabS" component={TabStackScreen} />*/}
         <Drawer.Screen name="Photos" component={PhotoTab} />
-        <Drawer.Screen name="AllProjectsRe" component={DallProjects} />
+        <Drawer.Screen name="AllProjectsRe" component={DallProjects}  options={{ title: 'All Projects',
+            drawerIcon: ({  size,color }) => (
+              <Icon name={"construct-sharp"} size={size} color={ color/*'#adafaa'*/}/> )       
+            }}/> 
       </Drawer.Navigator>
   );
 }

@@ -5,13 +5,20 @@ import RNFetchBlob from 'react-native-fetch-blob'
 
 
 
-const UploadDoc = ({navigation}) =>{
-    const [image,setImage] = useState({img:null})
+const UploadDoc = ({route,navigation}) =>{
+
+    const {ids} = route.params;
+
+    //const [image,setImage] = useState({img:null})
     const [upPdf,setupPdf] = useState({pdf:null})
     const [Id, setId] = useState('');
+    const [fname,setFname] = useState('');
+    const [ftype,setFtype] = useState('');
+    const [fsize,setFsize] = useState('');
+    const [errortext, setErrortext] = useState('');
 
     const selectFile = async () => {
-
+      setId(ids)
 
         try {
             const granted = await PermissionsAndroid.request(
@@ -29,11 +36,17 @@ const UploadDoc = ({navigation}) =>{
                     });
 
                     const e = res[0].uri
-                    setImage({img:e})
+                    //setImage({img:e})
                     //converting...
 
                     const result = await RNFetchBlob.fs.readFile(e,'base64')
                     setupPdf({pdf:result})
+
+                    for (const info of res){
+                      setFname(info.name)
+                      setFtype(info.type)
+                      setFsize(info.size)
+                    }
                      console.log('URI : ' + result);
                     
                     console.log(
@@ -43,6 +56,7 @@ const UploadDoc = ({navigation}) =>{
                   } catch (err) {
                     if (DocumentPicker.isCancel(err)) {
                       // User cancelled the picker, exit any dialogs or menus and move on
+
                     } else {
                       throw err
                     }
@@ -60,17 +74,17 @@ const UploadDoc = ({navigation}) =>{
     //SEND SCREEN
 
     const handleUpload = () => {
-
+       {/*
         if (!Id) {
           alert('Please enter project id');
           return;
         }
-
+        */}
         if (!upPdf.pdf) {
-          alert('Please Select an image');
+          alert('Please Select document');
           return;
         }
-        
+      
         
         fetch('https://rpyendapp.herokuapp.com/pdfupload', {
            method: 'POST',
@@ -81,7 +95,8 @@ const UploadDoc = ({navigation}) =>{
             },
             body: JSON.stringify({
                 "id": Id,
-                "pdf": upPdf.pdf
+                "pdf": upPdf.pdf,
+                "docname":fname
             })
         })
         .then((response) => response.json())
@@ -93,12 +108,15 @@ const UploadDoc = ({navigation}) =>{
             if (response.status === 'success') {
             //AsyncStorage.setItem('user_id', responseJson.data.email);
              console.log(response.data);
-             setImage({img:null})
+             //setImage({img:null})
              setupPdf({pdf:null})
              setId('')
+             setFname('')
+             setFtype('')
+             setFsize('')
              
             //navigation.replace('ElHome');
-             Alert.alert(response.data,
+             alert(response.status,
                 {   title: "OK",
                     onPress: navigation.navigate("Dscreen")}).           
              return;
@@ -123,16 +141,11 @@ const UploadDoc = ({navigation}) =>{
         <View style={{flex:1}}>
             <Text style={{marginBottom:10}}>Selection Screen</Text>
 
-            <Image
-            source={{
-              uri: image.img,
-            }}
-            style={{height: 250,
-                width: 250,
-                resizeMode: 'stretch',}}
-          />
-
+            <Text style={{marginTop:20,marginBottom:10}}>Name: {fname}</Text>
+            <Text style={{marginTop:10,marginBottom:10}}>Type: {ftype}</Text>
+            <Text style={{marginTop:10,marginBottom:30}}>Size: {fsize}</Text>
             
+          {/*  
             <TextInput
                 style={styles.input}
                 //onChangeText={onChangeText}
@@ -141,18 +154,22 @@ const UploadDoc = ({navigation}) =>{
                 placeholder="project id"
                 value={Id}
                />               
-            
+          */}
+          <View style={{flexDirection:'column',width:200,alignSelf:'center',justifyContent:'space-between'}}>
             <Button
-             title = "Pick image"
+             title = "Pick pdf document"
              onPress={selectFile}
              
             />
+          </View>
 
+          <View style={{flexDirection:'column',width:200,alignSelf:'center',justifyContent:'space-between',marginTop:20}}>
             <Button
              
-             title = "Upload image"
+             title = "Upload Document"
              onPress={handleUpload}
             />
+            </View>
         </View>
     );
 }

@@ -129,6 +129,7 @@ const UploadPhoto = ({route,navigation}) =>{
         <View style={{flex:1}}>
             <Text style={{marginBottom:10}}>Selection Screen</Text>
 
+            <View style={{alignSelf:'center'}}>
             <Image
             source={{
               uri: image.img,
@@ -137,7 +138,7 @@ const UploadPhoto = ({route,navigation}) =>{
                 width: 250,
                 resizeMode: 'stretch',}}
           />
-
+           </View>
             
            {/* <TextInput
                 style={styles.input}
@@ -148,18 +149,22 @@ const UploadPhoto = ({route,navigation}) =>{
                 value={Id}
                />               
            */}
-           
+           <View style={{flexDirection:'column',width:200,alignSelf:'center',justifyContent:'space-between',marginTop:10}}>
             <Button
              title = "Pick image"
              onPress={selectFile}
              
             />
+            </View>
 
+           <View style={{flexDirection:'column',width:200,alignSelf:'center',justifyContent:'space-between',marginTop:25}}>
             <Button
              
              title = "Upload image"
              onPress={handleUpload}
             />
+            </View>
+
         </View>
     );
 }

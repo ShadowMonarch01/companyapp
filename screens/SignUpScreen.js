@@ -61,7 +61,7 @@ function SignUpScreen({navigation}) {
             'Registration Successful. Please Login to proceed'
           );
         } else {
-          setErrortext(respons.error);
+          setErrortext(response.status);
         }
       })
       .catch((error) => {
