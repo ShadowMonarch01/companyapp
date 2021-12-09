@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text,StyleSheet,FlatList,TouchableOpacity,Image,RefreshControl} from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
+import  Icon  from 'react-native-vector-icons/Ionicons';
 
 const AllProjectsScreen = ({navigation}) =>{
 
@@ -37,21 +38,19 @@ const AllProjectsScreen = ({navigation}) =>{
       const renderItem = ({item}) => {
         return(
           <TouchableOpacity
-            onPress={() => navigation.navigate('Fdetails',{name:item.id, details:item.details })}
+            onPress={() => navigation.navigate('Fdetails',{name:item.id, details:item.details,proname:item.name })}
           >
               <View style={{flexDirection:'column', justifyContent: 'space-between', backgroundColor:'#FFFFFF',borderRadius:10,padding:18,marginTop:10,marginBottom:10}}>
                  <View style={{flexDirection:'row',alignSelf:'stretch',width:300}}>
-                    <Image
-                      style={{height: 40,
-                          width: 40,
-                          margin: 12,borderWidth: 1,backgroundColor:'blue'}}
-                    />
+
+                 <Icon name={"ios-construct-outline"} size={44} color={'#01a1ec'}/>
+
                     <View style={{flexDirection:'column'}}>
-                        <Text style={{marginTop:8}}>{item.name}</Text>
-                        <Text style={{marginTop:6}}>Dropped by...</Text>
+                        <Text style={{marginTop:8,marginLeft:16,color:"#000000"}}>{item.name}</Text>
+                        <Text style={{marginTop:6,marginLeft:16,color:"#000000"}}>Posted by...</Text>
                      </View>
                  </View>
-                <Text>{item.details}</Text>
+                <Text style={{color:"#000000"}}>{item.details}</Text>
               </View>
         </TouchableOpacity>
         )
@@ -64,7 +63,7 @@ const AllProjectsScreen = ({navigation}) =>{
 
     return(
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>All Projects</Text>
+          <Text style={{color:"#000000"}}>All Projects</Text>
           <FlatList
             data={projects}
             renderItem={renderItem}

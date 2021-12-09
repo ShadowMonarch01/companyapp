@@ -105,11 +105,11 @@ const PhotoTab = ({route,navigation,name}) =>{
  
 return(
    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-     <Text>All Projects{id}</Text>
+     <Text>Projects{id}</Text>
      <View></View>
      <FlatList
      ListHeaderComponent={() => {
-       return(<Text>Project Images</Text>)
+       return(<Text style={{color:"#000000"}}>Project Images</Text>)
      }}
        data={projects}
        renderItem={renderItem}
@@ -122,10 +122,10 @@ return(
          />
        }
      />
-     <Button
+     {/* <Button
         title = "Upload photo"
         onPress={() => navigation.navigate('Uscreen',{ids:id})}
-       />
+       /> */}
 
         <TouchableOpacity
           onPress={() => navigation.navigate('Uscreen',{ids:id})}

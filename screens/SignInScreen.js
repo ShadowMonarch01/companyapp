@@ -1,7 +1,11 @@
-import React ,{useState} from 'react';
-import {View, Text, Button, StyleSheet, TextInput,TouchableOpacity ,SafeAreaView,Image} from 'react-native';
+import React ,{useState,useContext} from 'react';
+import {View, Text, Button, StyleSheet, TextInput,TouchableOpacity ,SafeAreaView,Image,ScrollView} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-community/async-storage';
+
+import  Icon  from 'react-native-vector-icons/Ionicons';
+
+import {AuthContext} from '../theauth/context'
 
 function SignInScreen({navigation}) {
   /*Swap the codes commented at line 97 for the ones that are not fo easy access
@@ -13,6 +17,9 @@ function SignInScreen({navigation}) {
 
   const [sta,setSta]= useState({isVis:false})
 
+  const [pword,setPword] = useState(true)
+
+  const {signIn} = useContext(AuthContext)
 
   const handleSubmitPress = async () => {
     setErrortext('');
@@ -60,7 +67,8 @@ function SignInScreen({navigation}) {
            AsyncStorage.setItem('phone', response.phone)
            AsyncStorage.setItem('adm', response.adm)
           setSta({isVis: false})
-          navigation.navigate('ElHome');
+          //navigation.navigate('ElHome');
+          signIn()
         } else {
           setErrortext(response.msg);
           setSta({isVis: false})
@@ -69,6 +77,7 @@ function SignInScreen({navigation}) {
         }
       })
       .catch((error) => {
+        setSta({isVis: false})
         //Hide Loader
         //setLoading(false);
         console.error(error);
@@ -79,6 +88,7 @@ function SignInScreen({navigation}) {
 
 
     return (
+      <ScrollView showsVerticalScrollIndicator={false}>
       <View style={{ flex: -11, alignItems: 'center', justifyContent: 'center'}}>
 
           <View style={{flex: 1,alignItems: 'center',justifyContent: 'center'}}>
@@ -102,23 +112,44 @@ function SignInScreen({navigation}) {
           <View style={{backgroundColor:'#FFFFFF',width:'88%', position:'relative',marginTop: -35,borderRadius: 10, shadowColor:"#000", shadowOffset:{width:0,height:3}, shadowOpacity:0.27,shadowRadius:4.65,elevation:6}}>
                 
                
-                  
+          <View style={{flexDirection:'row'}}>    
               <TextInput
                 style={styles.input}
                 //onChangeText={onChangeText}
                 onChangeText={(Email) => setEmail(Email)}
                 //value={number}
                 placeholder="Email Address"
+                placeholderTextColor="#C0C0C0"
+                keyboardType="email-address"
                />
+
+             <TouchableOpacity style={{marginTop:35}}>
+              <Icon name={"person-sharp"} size={25} color={'#C0C0C0'}/>
+              </TouchableOpacity>
+          </View>
+              
+              <View style={{flexDirection:'row'}}>
               
 
               <TextInput
                 style={styles.input}
                 //onChangeText={onChangeNumber}
                 //value={number}
+
+                secureTextEntry={pword}
                 onChangeText={(Password) => setPassword(Password)}
                 placeholder="Password"
+                placeholderTextColor="#C0C0C0"
               />
+
+              <TouchableOpacity style={{marginTop:35}}
+              onPress={()=>{setPword(!pword)}}>
+              <Icon name={"eye-sharp"} size={25} color={'#C0C0C0'}/>
+              </TouchableOpacity>
+
+              </View>
+              
+              
 
               <Text style={{marginLeft:210, color:'#0000ff',fontSize:12}}  onPress={() => navigation.navigate('ForgotPassword')} > Forgot Password</Text>
               <TouchableOpacity
@@ -142,10 +173,11 @@ function SignInScreen({navigation}) {
           <Image source={require('../onboardAssets/icons8-facebook-48.png')} style={{backgroundColor:'white', marginLeft:235,marginTop:-28, height:42, width:42, borderRadius:10}}/>
         </TouchableOpacity>
         
-        <Text style={{marginTop:30}}>Don't have an account?<Text style={{color:'#87ceeb'}} onPress={() => navigation.navigate('SignUpScreen')} > Sign up</Text></Text>
+        <Text style={{marginTop:30,color:"#000000"}}>Don't have an account?<Text style={{color:'#87ceeb'}} onPress={() => navigation.navigate('SignUpScreen')} > Sign up</Text></Text>
         
         
       </View>
+      </ScrollView>
     );
   }
   
@@ -166,6 +198,8 @@ const styles = StyleSheet.create({
       borderBottomWidth:1,
       borderBottomColor:'#a9a9a9',
       padding: 10,
+      width:"80%",
+      color:"#000000",
       
     },
     roundButton1: {

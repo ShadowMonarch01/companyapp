@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {View, Text,TextInput,Image,StyleSheet,Modal,TouchableOpacity,Alert,ActivityIndicator,Button,PermissionsAndroid} from 'react-native';
+import {View, Text,TextInput,Image,StyleSheet,Modal,TouchableOpacity,Alert,ActivityIndicator,Button,PermissionsAndroid,ScrollView} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import  Icon  from 'react-native-vector-icons/Ionicons';
 import DocumentPicker from 'react-native-document-picker'
@@ -279,8 +279,9 @@ const handleSubmitDetailsePress = async () => {
     
     
     return(
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>Third home tab screen</Text>
+          {/* <Text>Third home tab screen</Text> */}
 
           <View style = { styles.container }>
 
@@ -337,6 +338,7 @@ const handleSubmitDetailsePress = async () => {
                     <View style={{flexDirection:'column',width:200,alignSelf:'center',justifyContent:'space-between',marginTop:10}}>
                       <Button
                       title = "Pick image"
+                      color= "#00BFFF"
                       onPress={selectFile}
                       
                       />
@@ -346,6 +348,7 @@ const handleSubmitDetailsePress = async () => {
                       <Button
                       
                       title = "Upload image"
+                      color= "#00BFFF"
                       onPress={handleImgUpload}
                       />
                       </View>        
@@ -387,12 +390,12 @@ const handleSubmitDetailsePress = async () => {
 
               <TouchableOpacity style={{marginTop:30}}
               onPress={()=>{displayModalName(true)}}>
-              <View style={{flexDirection:'row',marginLeft:65}}>
+              <View style={{flexDirection:'row',marginLeft:12}}>
                 <Icon name={"person-sharp"} size={30} color={'#adafaa'}/>
 
-                <View style={{marginLeft:50}}>
-                  <Text>Name</Text>
-                  <Text style={{fontSize:20}}>{name}</Text>
+                <View style={{marginLeft:40}}>
+                  <Text style={{color:"#000000"}}>Name</Text>
+                  <Text style={{fontSize:20,color:"#000000"}}>{name}</Text>
                 </View>
               </View>
               </TouchableOpacity>
@@ -408,7 +411,7 @@ const handleSubmitDetailsePress = async () => {
             }}>
 
              <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)'}}>
-                 <View style={{width:'70%',height:'40%',backgroundColor:'white',borderRadius:20, alignItems: 'center', justifyContent: 'center'}}>
+                 <View style={{width:'70%',padding:12,paddingBottom:18,backgroundColor:'white',borderRadius:20, alignItems: 'center', justifyContent: 'center'}}>
                  {/* <ActivityIndicator size="large" color="#0000ff"  /> */}
                     
                  <TextInput
@@ -420,7 +423,7 @@ const handleSubmitDetailsePress = async () => {
                   />
 
                   <TouchableOpacity
-                  style={{marginTop:40,backgroundColor:'#2AC062',borderRadius: 6,padding:5}}
+                  style={{marginTop:30,backgroundColor:"#00BFFF",borderRadius: 6,padding:8}}
                   onPress={handleSubmitDetailsePress}>
                     <Text>Update Name</Text>
                   </TouchableOpacity>
@@ -432,12 +435,12 @@ const handleSubmitDetailsePress = async () => {
             
               <TouchableOpacity style={{marginTop:20}}
               onPress={()=>{displayModalInfo(true)}}>
-              <View style={{flexDirection:'row',marginLeft:65}}>
+              <View style={{flexDirection:'row',marginLeft:12}}>
                <Icon name={"briefcase"} size={30} color={'#adafaa'}/>
 
-                <View style={{marginLeft:50}}>
-                  <Text>About</Text>
-                  <Text style={{fontSize:18}}>{info}</Text>
+                <View style={{marginLeft:40}}>
+                  <Text style={{color:"#000000"}}>About</Text>
+                  <Text style={{fontSize:18,color:"#000000"}}>{info}</Text>
 
                 </View>
               </View>
@@ -454,8 +457,9 @@ const handleSubmitDetailsePress = async () => {
             }}>
 
              <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)'}}>
-                 <View style={{width:'80%',height:'80%',backgroundColor:'white',borderRadius:20, alignItems: 'center', justifyContent: 'center'}}>
+                 <View style={{width:'80%',backgroundColor:'white',borderRadius:20, alignItems: 'center', justifyContent: 'center',padding:12,paddingBottom:18}}>
                  <TextInput
+                    multiline
                     style={styles.input}
                     //onChangeText={onChangeText}
                     onChangeText={(tt) => setInfo(tt)}
@@ -464,7 +468,7 @@ const handleSubmitDetailsePress = async () => {
                   />
 
                   <TouchableOpacity
-                  style={{marginTop:40,backgroundColor:'#2AC062',borderRadius: 6,padding:5}}
+                  style={{marginTop:40,backgroundColor:"#00BFFF",borderRadius: 6,padding:8}}
                   onPress={handleSubmitDetailsePress}>
                     <Text>Update Profile</Text>
                   </TouchableOpacity>
@@ -476,12 +480,12 @@ const handleSubmitDetailsePress = async () => {
 
               <TouchableOpacity style={{marginTop:20}}
               onPress={()=>{displayModalPhone(true)}}>
-              <View style={{flexDirection:'row',marginLeft:65}}>
+              <View style={{flexDirection:'row',marginLeft:12}}>
                 <Icon name={"call"} size={30} color={'#adafaa'}/>
 
-                <View style={{marginLeft:50}}>
-                  <Text>Phone</Text>
-                  <Text style={{fontSize:18}}>{phone}</Text>
+                <View style={{marginLeft:40}}>
+                  <Text style={{color:"#000000"}}>Phone</Text>
+                  <Text style={{fontSize:18,color:"#000000"}}>{phone}</Text>
 
                 </View>
               </View>
@@ -498,7 +502,7 @@ const handleSubmitDetailsePress = async () => {
             }}>
 
              <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)'}}>
-                 <View style={{width:'80%',height:'30%',backgroundColor:'white',borderRadius:20, alignItems: 'center', justifyContent: 'center'}}>
+                 <View style={{width:'80%',backgroundColor:'white',borderRadius:20, alignItems: 'center', justifyContent: 'center',padding:12,paddingBottom:18}}>
                  <TextInput
                     style={styles.input}
                     //onChangeText={onChangeText}
@@ -508,7 +512,7 @@ const handleSubmitDetailsePress = async () => {
                   />
 
                   <TouchableOpacity
-                  style={{marginTop:40,backgroundColor:'#2AC062',borderRadius: 6,padding:5}}
+                  style={{marginTop:40,backgroundColor:"#00BFFF",borderRadius: 6,padding:8}}
                   onPress={handleSubmitDetailsePress}>
                     <Text>Update Number</Text>
                   </TouchableOpacity>
@@ -558,6 +562,7 @@ const handleSubmitDetailsePress = async () => {
           </TouchableOpacity>           */}
         </View>
        </View>
+       </ScrollView>
     );
 }
 
@@ -617,13 +622,14 @@ const styles = StyleSheet.create({
       textAlign: 'center',
     },
     input: {
-      height: 40,
-      marginTop:16,
+      fontSize:16,
+      marginTop:10,
       marginBottom:6,
       margin: 12,
       borderWidth: 0,
       borderBottomWidth:1,
       borderBottomColor:'#a9a9a9',
+      color:"#000000",
      
       
     },

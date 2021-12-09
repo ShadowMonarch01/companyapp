@@ -1,12 +1,16 @@
 import React ,{useState}from 'react';
-import {View, Text, Button,Image,TextInput,StyleSheet} from 'react-native';
+import {View, Text, Button,Image,TextInput,StyleSheet,ScrollView} from 'react-native';
 //import SendScreen from './screens/uploadscreen/SendScreen';
 import DocumentTab from './docs/documenttab';
-import TaskTab from './tasktab';
+import TaskStaker from './task/TaskStaker';
 import PhotoTab from './photo/phototab';
 import PhotoStaker from './photo/PhotoStaker';
 import DocStaker from './docs/DocStaker';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+import AsyncStorage from '@react-native-community/async-storage';
+
+import  Icon  from 'react-native-vector-icons/Ionicons';
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -15,7 +19,9 @@ const TabsScreen = ({route,navigation}) =>{
     //const [text,setText] = useState('');
     //const [text1,setText1] = useState('');
     //const [showContent,setShowContent] = useState('Docs');
-    const {name,details} = route.params;
+    const {name,details,proname} = route.params;
+
+    AsyncStorage.setItem('projectname', proname)
 
    
     return(
@@ -26,33 +32,33 @@ const TabsScreen = ({route,navigation}) =>{
                     <Text>ll:{name}</Text>
                </View> */}
 
-            <View style={{flexDirection:'column', justifyContent: 'space-between', backgroundColor:'green',borderRadius:10,padding:10,marginTop:1,marginBottom:10}}>
-                 <View style={{flexDirection:'row'}}>
-                    <Image
-                      style={{height: 40,
-                          width: 40,
-                          margin: 12,borderWidth: 1,backgroundColor:'blue'}}
-                    />
-                    <View style={{flexDirection:'column'}}>
-                        <Text style={{marginTop:8}}>{name}</Text>
-                        <Text style={{marginTop:3}}>Sub project</Text>
-                        <Text style={{marginTop:3}}>Location</Text>
-                        <Text style={{marginTop:3}}>Duration</Text>
+            <View style={{flexDirection:'column', justifyContent: 'space-between', backgroundColor:'#FFFFFF',borderRadius:10,padding:10,marginTop:1,marginBottom:5}}>
+                 <ScrollView>
+                 <View style={{flexDirection:'row',padding:5}}>
+
+                 <Icon name={"ios-construct-sharp"} size={44} color={'#01a1ec'}/>
+
+                    <View style={{flexDirection:'column',marginLeft:14,marginTop:-8}}>
+                        <Text style={{marginTop:8,color:"#000000"}}>{proname}</Text>
+                        <Text style={{marginTop:3,color:"#000000"}}>Details:{details}</Text>
+                        {/* <Text style={{marginTop:3}}>Location: {details}</Text> */}
+                        <Text style={{marginTop:3,color:"#000000"}}>Duration</Text>
                         
                      </View>
                  </View>
+                 </ScrollView>
                 
               </View>
-                <Button
+                {/* <Button
              title = "Back to project"
              onPress={() => navigation.navigate('Fproject')}
-            />
+            /> */}
             </View>
 
             <View style={{flex:4}}>
                 <Tab.Navigator initialRouteName="DOCUMENTS">
                     <Tab.Screen name="DOCUMENTS" children={(props)=> <DocStaker {...props} name={name}/>}/>
-                    <Tab.Screen name="TASKS" children={(props)=> <TaskTab {...props} name={name}/>}/>
+                    <Tab.Screen name="TASKS" children={(props)=> <TaskStaker {...props} name={name}/>}/>
                     <Tab.Screen name="PHOTOS" children={(props)=> <PhotoStaker {...props} name={name}/>}/>
                 </Tab.Navigator>
             </View>

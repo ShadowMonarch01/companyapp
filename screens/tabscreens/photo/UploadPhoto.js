@@ -1,8 +1,9 @@
 import React,{useState} from 'react';
-import {View, Text, Button,PermissionsAndroid,Image,TextInput,StyleSheet,Alert} from 'react-native';
+import {View, Text, Button,PermissionsAndroid,Image,TextInput,StyleSheet,Alert,TouchableOpacity} from 'react-native';
 import DocumentPicker from 'react-native-document-picker'
 import RNFetchBlob from 'react-native-fetch-blob'
 
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 const UploadPhoto = ({route,navigation}) =>{
@@ -13,6 +14,8 @@ const UploadPhoto = ({route,navigation}) =>{
     const [upimage,setupImage] = useState({img:null})
     const [Id, setId] = useState('');
     const [errortext, setErrortext] = useState('');
+
+    const [sta,setSta]= useState({isVis:false})
 
     const selectFile = async () => {
           setId(ids)
@@ -77,6 +80,7 @@ const UploadPhoto = ({route,navigation}) =>{
           return;
         }
         
+        setSta({isVis: true})
         
         fetch('https://rpyendapp.herokuapp.com/uploadimage', {
            method: 'POST',
@@ -103,7 +107,8 @@ const UploadPhoto = ({route,navigation}) =>{
              setupImage({img:null})
              setId('')
              
-            navigation.navigate('Pscreen');
+            //navigation.navigate('Pscreen');
+            setSta({isVis: false})
             alert(response.status,
                 {   title: "OK",
                     onPress: navigation.navigate("Pscreen")})           
@@ -111,11 +116,13 @@ const UploadPhoto = ({route,navigation}) =>{
             } else {
             setErrortext(response.data);
             console.log('An error occured try again');
+            setSta({isVis: false})
             }
         })
         .catch((error) => {
             //Hide Loader
             //setLoading(false);
+            setSta({isVis: false})
             console.error(error);
         });
         
@@ -127,7 +134,7 @@ const UploadPhoto = ({route,navigation}) =>{
 
     return(
         <View style={{flex:1}}>
-            <Text style={{marginBottom:10}}>Selection Screen</Text>
+            <Text style={{marginBottom:10,alignSelf:'center',color:"#000000"}}>Post a picture</Text>
 
             <View style={{alignSelf:'center'}}>
             <Image
@@ -152,6 +159,7 @@ const UploadPhoto = ({route,navigation}) =>{
            <View style={{flexDirection:'column',width:200,alignSelf:'center',justifyContent:'space-between',marginTop:10}}>
             <Button
              title = "Pick image"
+             color= "#00BFFF"
              onPress={selectFile}
              
             />
@@ -161,6 +169,7 @@ const UploadPhoto = ({route,navigation}) =>{
             <Button
              
              title = "Upload image"
+             color= "#00BFFF"
              onPress={handleUpload}
             />
             </View>

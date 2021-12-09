@@ -3,6 +3,8 @@ import {View, Text, Button,PermissionsAndroid,Image,TextInput,StyleSheet,Alert} 
 import DocumentPicker from 'react-native-document-picker'
 import RNFetchBlob from 'react-native-fetch-blob'
 
+import Spinner from 'react-native-loading-spinner-overlay';
+
 
 
 const UploadDoc = ({route,navigation}) =>{
@@ -16,6 +18,8 @@ const UploadDoc = ({route,navigation}) =>{
     const [ftype,setFtype] = useState('');
     const [fsize,setFsize] = useState('');
     const [errortext, setErrortext] = useState('');
+
+    const [sta,setSta]= useState({isVis:false})
 
     const selectFile = async () => {
       setId(ids)
@@ -84,7 +88,8 @@ const UploadDoc = ({route,navigation}) =>{
           alert('Please Select document');
           return;
         }
-      
+       
+        setSta({isVis: true})
         
         fetch('https://rpyendapp.herokuapp.com/pdfupload', {
            method: 'POST',
@@ -116,6 +121,7 @@ const UploadDoc = ({route,navigation}) =>{
              setFsize('')
              
             //navigation.replace('ElHome');
+            setSta({isVis: false})
              alert(response.status,
                 {   title: "OK",
                     onPress: navigation.navigate("Dscreen")}).           
@@ -123,11 +129,13 @@ const UploadDoc = ({route,navigation}) =>{
             } else {
             setErrortext(response.msg);
             console.log('An error occured try again');
+            setSta({isVis: false})
             }
         })
         .catch((error) => {
             //Hide Loader
-            setLoading(false);
+            //setLoading(false);
+            setSta({isVis: false})
             console.error(error);
         });
         
@@ -139,11 +147,11 @@ const UploadDoc = ({route,navigation}) =>{
 
     return(
         <View style={{flex:1}}>
-            <Text style={{marginBottom:10}}>Selection Screen</Text>
+            <Text style={{marginBottom:10,alignSelf:'center',color:"#000000"}}>Post pdf document</Text>
 
-            <Text style={{marginTop:20,marginBottom:10}}>Name: {fname}</Text>
-            <Text style={{marginTop:10,marginBottom:10}}>Type: {ftype}</Text>
-            <Text style={{marginTop:10,marginBottom:30}}>Size: {fsize}</Text>
+            <Text style={{marginTop:20,marginBottom:10,color:"#000000"}}>Name: {fname}</Text>
+            <Text style={{marginTop:10,marginBottom:10,color:"#000000"}}>Type: {ftype}</Text>
+            <Text style={{marginTop:10,marginBottom:30,color:"#000000"}}>Size: {fsize}</Text>
             
           {/*  
             <TextInput
@@ -158,6 +166,7 @@ const UploadDoc = ({route,navigation}) =>{
           <View style={{flexDirection:'column',width:200,alignSelf:'center',justifyContent:'space-between'}}>
             <Button
              title = "Pick pdf document"
+             color= "#00BFFF"
              onPress={selectFile}
              
             />
@@ -167,9 +176,21 @@ const UploadDoc = ({route,navigation}) =>{
             <Button
              
              title = "Upload Document"
+             color= "#00BFFF"
              onPress={handleUpload}
             />
             </View>
+
+            <View style={{flex: 1,alignItems: 'center',justifyContent: 'center'}}>
+              <Spinner
+              //visibility of Overlay Loading Spinner
+              visible={sta.isVis}
+              //Text with the Spinner
+              textContent={'Uploading...'}
+              //Text style of the Spinner Text
+              textStyle={{color: '#FFF'}}
+            />
+          </View>
         </View>
     );
 }

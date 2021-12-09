@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import DocumentPicker from "react-native-document-picker"
-import {View, Text,TextInput, Button,StyleSheet} from 'react-native';
+import {View, Text,TextInput, Button,StyleSheet,TouchableOpacity} from 'react-native';
 
 
 const ProjectScreen = ({navigation}) =>{
@@ -68,9 +68,10 @@ const ProjectScreen = ({navigation}) =>{
   return(
     <View style={{ flex: 1, backgroundColor:'#FFFFFF' }}>
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
-        <Text style={{fontSize:24,marginTop:5}}>Create New Project</Text>
-        <TextInput style={{height: 40,marginTop:20,margin: 12,borderWidth: 0,borderBottomWidth:1,borderBottomColor:'#a9a9a9',padding: 10,width:300}}
+        <Text style={{fontSize:24,marginTop:5,color:"#000000"}}>Create New Project</Text>
+        <TextInput style={{height: 40,marginTop:20,margin: 12,borderWidth: 0,borderBottomWidth:1,borderBottomColor:'#a9a9a9',padding: 10,width:300,color:"#000000"}}
          placeholder="Enter Project Name"
+         placeholderTextColor="#C0C0C0"
          value={text}
          onChangeText={(ids) => setText(ids)}
          ></TextInput>
@@ -78,17 +79,30 @@ const ProjectScreen = ({navigation}) =>{
         <TextInput
           multiline
           numberOfLines={10}
-          style={{margin: 12,borderWidth: 1,width:300}}
+          style={{margin: 12,borderWidth: 1,width:300,color:"#000000",borderRadius:20}}
           onChangeText={(ls) => setDetails(ls)}
           value={details}
           placeholder="Enter Project details"
+          placeholderTextColor="#C0C0C0"
         />
-        <View style={{marginTop:10}}>
+        {/* <View style={{marginTop:10}}>
         <Button
            title = "Create Project"
            onPress={handleProjectUpload}
           />
-        </View>
+        </View> */}
+
+        <TouchableOpacity
+        onPress={handleProjectUpload}
+        style={{marginTop:50, backgroundColor:'#00BFFF',borderRadius: 10,width:280, height:48,alignSelf:'center'}}>
+        <Text style={{color:'white', alignSelf:'center', marginTop:12}}>Create Project</Text>
+      </TouchableOpacity>
+
+        <TouchableOpacity
+        onPress={() => navigation.navigate('Fproject')}
+        style={{marginTop:50, backgroundColor:'#00BFFF',borderRadius: 10,width:280, height:48,alignSelf:'center'}}>
+        <Text style={{color:'white', alignSelf:'center', marginTop:12}}>SEE  ALL  PROJECTS</Text>
+      </TouchableOpacity>
       </View>
     </View>
   );

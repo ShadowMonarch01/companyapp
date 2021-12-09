@@ -6,13 +6,14 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React, {useState, useEffect } from 'react';
+import React, {useState, useEffect,useMemo } from 'react';
 import {View, Text,Image} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import  Icon  from 'react-native-vector-icons/Ionicons';
 
+import {AuthContext} from './theauth/context'
 
 import OnboardingScreen from './screens/OnboardingScreen'
 import HomeScreen from './screens/HomeScreen'
@@ -163,9 +164,13 @@ const Mill = () => {
             drawerIcon: ({  size,color }) => (
               <Icon name={"create-sharp"} size={size} color={ color/*'#adafaa'*/}/> )       
             }}/>
-        <Drawer.Screen name="SendS" component={SendStackScreen} />
+        {/* <Drawer.Screen name="SendS" component={SendStackScreen} /> */}
        {/* <Drawer.Screen name="TabS" component={TabStackScreen} />*/}
-        <Drawer.Screen name="Photos" component={PhotoTab} />
+        {/* <Drawer.Screen name="Photos" component={PhotoTab} options={{
+          drawerLabel: () => null,
+          title:null,
+          drawerIcon: () => null
+        }}/> */}
         <Drawer.Screen name="AllProjectsRe" component={DallProjects}  options={{ title: 'All Projects',
             drawerIcon: ({  size,color }) => (
               <Icon name={"construct-sharp"} size={size} color={ color/*'#adafaa'*/}/> )       
@@ -183,15 +188,67 @@ const Mill = () => {
 //HOME TABS
 
 const Mulla = () => {
+  const [status, setStatus] = useState(null)
+
+  const authcontext = useMemo(() => ({
+    signIn: () => {
+      setStatus(false)
+    },
+    signOut: () => {
+      setStatus(true)
+    },
+  }))
+
+  
+
+//   useEffect(() => {
+//     const tok = AsyncStorage.getItem('token')
+//       if (tok == null){
+//         setStatus(true)
+//       } else{
+//         setStatus(false)
+//       }
+  
+//  }, []);
+
+ useEffect(() => {
+  AsyncStorage.getItem('token').then(value => {
+   if(value === null) {
+     //AsyncStorage.setItem('alreadyLaunched', 'true');
+     //AsyncStorage.setItem('token','true')
+     setStatus(true);
+   } else{
+     setStatus(false);
+     //AsyncStorage.setItem('token','true')
+   }
+ });
+}, []);
+
+  
+  
+
   return(
+    <AuthContext.Provider value={authcontext}>
     <RootStack.Navigator headerMode='none'>
-      <RootStack.Screen name="SplashScreen" component={SplashScreen}/>
-      <RootStack.Screen name="SignUpScreen" component={SignUpScreen}/>
-      <RootStack.Screen name="SignInScreen" component={SignInScreen}/>
-      <RootStack.Screen name="ForgotPassword" component={ForgotPassword}/>
-      <RootStack.Screen name="SetPasswordScreen" component={SetPasswordScreen}/>
-      <RootStack.Screen name="ElHome" component={Mill}/>
+       {status ? (
+          <>
+            <RootStack.Screen name="SplashScreen" component={SplashScreen}/>
+            <RootStack.Screen name="SignUpScreen" component={SignUpScreen}/>
+            <RootStack.Screen name="SignInScreen" component={SignInScreen}/>
+            <RootStack.Screen name="ForgotPassword" component={ForgotPassword}/>
+            <RootStack.Screen name="SetPasswordScreen" component={SetPasswordScreen}/>
+            
+            
+            
+          </>
+  ) : (
+            <>
+            <RootStack.Screen name="ElHome" component={Mill}/>
+            
+            </>
+  )}
     </RootStack.Navigator>
+    </AuthContext.Provider>
   );
 }
 
@@ -201,11 +258,13 @@ const Metab = () => {
 //Welcome screens that show only when the user first installs the app
   useEffect(() => {
      AsyncStorage.getItem('alreadyLaunched').then(value => {
-      if(value == null) {
+      if(value === null) {
         AsyncStorage.setItem('alreadyLaunched', 'true');
+        //AsyncStorage.setItem('token','false')
         setIsFirstLaunch(true);
       } else{
         setIsFirstLaunch(false);
+       // AsyncStorage.setItem('token','false')
       }
     });
   }, []);

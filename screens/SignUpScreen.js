@@ -1,8 +1,9 @@
 import React ,{useState}from 'react';
-import {View, Text, Button, StyleSheet, TextInput,TouchableOpacity ,SafeAreaView,Image,ActivityIndicator} from 'react-native';
+import {View, Text, Button, StyleSheet, TextInput,TouchableOpacity ,SafeAreaView,Image,ActivityIndicator,ScrollView} from 'react-native';
 //import Spinner from 'react-native-loading-spinner-overlay';
-
+import Spinner from 'react-native-loading-spinner-overlay';
 // Register here and use the login screen to navigate to home
+import  Icon  from 'react-native-vector-icons/Ionicons';
 
 function SignUpScreen({navigation}) {
   const [userName, setUserName] = useState('');
@@ -10,6 +11,10 @@ function SignUpScreen({navigation}) {
   const [password, setPassword] = useState('');
   const [isRegistraionSuccess,  setIsRegistraionSuccess] = useState(false);
   const [errortext, setErrortext] = useState('');
+
+  const [sta,setSta]= useState({isVis:false})
+
+  const [pword,setPword] = useState(true)
 
   //const [sta,setSta]= useState({isVis:false})
 
@@ -35,7 +40,7 @@ function SignUpScreen({navigation}) {
       password: password,
     };
     
-
+    setSta({isVis: true})
     fetch('https://rpyendapp.herokuapp.com/register', {
       method: 'POST',
       headers: {
@@ -56,6 +61,7 @@ function SignUpScreen({navigation}) {
         console.log(response);
         // If server response message same as Data Matched
         if (response.status === 'success') {
+          setSta({isVis: false})
           setIsRegistraionSuccess(true);
           console.log(
             'Registration Successful. Please Login to proceed'
@@ -67,6 +73,7 @@ function SignUpScreen({navigation}) {
       .catch((error) => {
         //Hide Loader
         //setLoading(false);
+        setSta({isVis: false})
         console.error(error);
       });
   };
@@ -93,6 +100,7 @@ function SignUpScreen({navigation}) {
   }
 
     return (
+      <ScrollView showsVerticalScrollIndicator={false}>
       <View style={{ flex: -11, alignItems: 'center', justifyContent: 'center'}}>
 
         {/*loading screens*/}
@@ -108,6 +116,17 @@ function SignUpScreen({navigation}) {
             />
     </View> */}
 
+         <View style={{flex: 1,alignItems: 'center',justifyContent: 'center'}}>
+              <Spinner
+              //visibility of Overlay Loading Spinner
+              visible={sta.isVis}
+              //Text with the Spinner
+              textContent={'Registering User...'}
+              //Text style of the Spinner Text
+              textStyle={{color: '#FFF'}}
+            />
+          </View>
+
 
           <View style ={{alignSelf:'stretch',height:226, backgroundColor:'#00BFFF'}}>
           
@@ -119,28 +138,56 @@ function SignUpScreen({navigation}) {
           <View style={{backgroundColor:'#FFFFFF',width:'88%', position:'relative',marginTop: -35,borderRadius: 10,shadowColor:"#000", shadowOffset:{width:0,height:3}, shadowOpacity:0.27,shadowRadius:4.65,elevation:6}}>
                 
                
-                  
+          <View style={{flexDirection:'row'}}>
               <TextInput
                 style={styles.input}
                 onChangeText={(UserName) => setUserName(UserName)}
                 placeholder="User name"
+                placeholderTextColor="#C0C0C0"
                 //value={text}
                />
+
+             <TouchableOpacity style={{marginTop:35}}>
+               <Icon name={"person-sharp"} size={25} color={'#C0C0C0'}/>
+              </TouchableOpacity>
+          </View>
+
+
+
+          <View style={{flexDirection:'row'}}>   
               <TextInput
                 style={styles.input}
                 onChangeText={(Email) => setEmail(Email)}
                 //value={number}
                 placeholder="Email Address"
-                //keyboardType="numeric"
+                keyboardType="email-address"
+                placeholderTextColor="#C0C0C0"
               />
 
+             <TouchableOpacity style={{marginTop:35}}>
+                <Icon name={"mail"} size={25} color={'#C0C0C0'}/>
+              </TouchableOpacity>
+          </View>
+
+
+          <View style={{flexDirection:'row'}}>   
               <TextInput
                 style={styles.input}
                 onChangeText={(Password) => setPassword(Password)}
                 //value={number}
+
+                secureTextEntry={pword}
                 placeholder="Password"
+                placeholderTextColor="#C0C0C0"
                 //keyboardType="numeric"
               />
+
+            <TouchableOpacity style={{marginTop:35}}
+              onPress={()=>{setPword(!pword)}}>
+              <Icon name={"eye-sharp"} size={25} color={'#C0C0C0'}/>
+              </TouchableOpacity>
+
+              </View>
 
               <TouchableOpacity
                 onPress={handleSubmitButton}
@@ -162,10 +209,11 @@ function SignUpScreen({navigation}) {
           <Image source={require('../onboardAssets/icons8-facebook-48.png')} style={{backgroundColor:'white', marginLeft:235,marginTop:-28, height:42, width:42, borderRadius:10}}/>
         </TouchableOpacity>
         
-        <Text style={{marginTop:30}}>You have an accoutn?<Text  onPress={() => navigation.navigate('SignInScreen')}  style={{color:'#87ceeb'}}> Sign in</Text></Text>
+        <Text style={{marginTop:30,color:"#000000"}}>You have an accoutn?<Text  onPress={() => navigation.navigate('SignInScreen')}  style={{color:'#87ceeb'}}> Sign in</Text></Text>
         
         
       </View>
+      </ScrollView>
     );
   }
   
@@ -187,6 +235,8 @@ const styles = StyleSheet.create({
       borderBottomWidth:1,
       borderBottomColor:'#a9a9a9',
       padding: 10,
+      width:"80%",
+      color:"#000000",
       
     },
     roundButton1: {

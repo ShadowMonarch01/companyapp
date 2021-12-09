@@ -94,7 +94,7 @@ const DocumentTab = ({route,navigation,name}) =>{
              <View style={{flex:1,flexDirection:'column', justifyContent: 'space-between', alignItems:'stretch',backgroundColor:'#FFFFFF',borderRadius:10,padding:15,marginTop:10,marginBottom:10}}>
                  <View style={{flexDirection:'row',alignItems:'center',alignSelf:'stretch',width:290}}>
                    <Icon name={"document-text-outline"} size={44} color={'#01a1ec'}/>
-                   <Text style={{fontSize:16}}>{item.name}</Text>
+                   <Text style={{fontSize:16,color:"#000000"}}>{item.name}</Text>
                 </View>
              </View>
     
